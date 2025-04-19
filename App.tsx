@@ -1,84 +1,53 @@
-// import { StatusBar } from 'expo-status-bar';
-// import { StyleSheet, Text, View } from 'react-native';
-
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Open up App.tsx to start working on your app!</Text>
-//       <StatusBar style="auto" />
-//     </View>
-    
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
-
-
-
-// // App.tsx
-// import React from 'react';
-// import { GluestackUIProvider, UIConfig, Box, Text,Badge,BadgeText } from '@gluestack-ui/themed';
-// // import { GluestackUIProvider, UIConfig } from '@gluestack-ui/themed';
-// import {config} from '@gluestack-ui/config';
-
-// export default function App() {
-//   return (
-//     <GluestackUIProvider config={config}>
-//       <Box flex={1} justifyContent="center" alignItems="center" bg="$blue100">
-//         <Text size="lg" color="$blue800" fontWeight="$bold">
-//           Gluestack UI is working! 🎉
-//         </Text>
-//         <Badge size="md" variant="solid" action="success">
-//         <BadgeText>Active</BadgeText>
-//       </Badge>
-//       </Box>
-//     </GluestackUIProvider>
-//   );
-// }
-
-
-
-
-
-// App.tsx
 import React from 'react';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
-import { config } from '@gluestack-ui/config';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import { Home, CreditCard, Settings } from 'lucide-react-native';
+import { Image } from '@gluestack-ui/themed';
 import HomeScreen from './screens/HomeScreen';
 import TransactionsScreen from './screens/TransactionsScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import { customConfig } from './theme';
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <GluestackUIProvider config={config}>
+    <GluestackUIProvider config={customConfig}>
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
-            tabBarIcon: ({ color, size }) => {
+            tabBarIcon: ({ color, focused }) => {
+              let iconSource;
+              const iconStyle = {
+                tintColor: color,
+                width: 24,
+                height: 24,
+              };
+
               if (route.name === 'Home') {
-                return <Home color={color} size={size} />;
+                iconSource = require('./assets/images/home.png');
               } else if (route.name === 'Transactions') {
-                return <CreditCard color={color} size={size} />;
+                iconSource = require('./assets/images/multiple_stop.png');
               } else if (route.name === 'Settings') {
-                return <Settings color={color} size={size} />;
+                iconSource = require('./assets/images/settings.png');
               }
+
+              return (
+                <Image
+                  source={iconSource}
+                  alt={`${route.name} tab icon`}
+                  style={[iconStyle, focused ? { tintColor: '#199F65' } : {}]}
+                  resizeMode="contain"
+                />
+              );
             },
-            tabBarActiveTintColor: '#0066CC',
-            tabBarInactiveTintColor: 'gray',
+            tabBarActiveTintColor: '#199F65',
+            tabBarInactiveTintColor: '#848484',
             headerShown: false,
+            tabBarStyle: {
+              paddingBottom: 4,
+              height: 60,
+            },
           })}
         >
           <Tab.Screen name="Home" component={HomeScreen} />

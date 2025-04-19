@@ -1,5 +1,5 @@
 // screens/HomeScreen.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Text,
@@ -13,19 +13,59 @@ import {
   Badge,
   BadgeText,
   ScrollView,
+  Image,
 } from '@gluestack-ui/themed';
 import { AlertCircle, Phone, Clock, ArrowUpRight } from 'lucide-react-native';
+import { Pressable } from 'react-native';
 // import { AlertCircle, Phone, Clock, ArrowUpRight } from 'lucide-react';
 
 export default function HomeScreen() {
-  return (
-    <ScrollView bg="$white" flex={1} p="$4">
-      <VStack space="md">
-        <Text fontSize="$xl" marginTop="$20" fontWeight="$bold">
-          John's Takeaway
-        </Text>
 
-        <Box bg="$blue50" p="$4" borderRadius="$md">
+    const [activeItem, setActiveItem] = useState<string | null>(null);
+
+  const actions = [
+    { 
+      id: 'lastPayout',
+      label: 'Last payout', 
+      icon: require('../assets/images/card_travel.png')
+    },
+    { 
+      id: 'alerts',
+      label: 'Alerts', 
+      icon: require('../assets/images/notifications_unread.png')
+    },
+    { 
+      id: 'callStatus',
+      label: 'Call status', 
+      icon: require('../assets/images/perm_phone_msg.png')
+    },
+    { 
+      id: 'recentPayments',
+      label: 'Recent Payments', 
+      icon: require('../assets/images/credit_card_clock.png')
+    },
+  ];
+
+  return (
+    <ScrollView bg="$white" marginTop="$5" flex={1} p="$4">
+        <HStack marginBottom="$7" alignItems="center" space="sm">
+          <Image
+            source={require('../assets/images/logo.png')}
+            alt="John's Takeaway Logo"
+            h="$8"  // 16px
+            w="$8"  // 16px
+            resizeMode="contain"
+          />
+          <Text fontSize="$xl" fontWeight="$bold">
+            John's Takeaway
+          </Text>
+        </HStack>
+      <VStack space="md">
+        {/* <Text fontSize="$xl" marginTop="$20" fontWeight="$bold">
+          John's Takeaway
+        </Text> */}
+
+        <Box bg="$" p="$4" borderRadius="$md">
           <Text fontSize="$sm" color="$blue800">
             Hey John,
           </Text>
@@ -62,35 +102,53 @@ export default function HomeScreen() {
 
         <Divider my="$2" />
 
-        <HStack justifyContent="space-between">
-          <VStack space="sm" alignItems="center">
-            <Box bg="$blue100" p="$2" borderRadius="$full">
-              <Clock size={20} color="#0066CC" />
-            </Box>
-            <Text fontSize="$sm">Last payout</Text>
-          </VStack>
 
-          <VStack space="sm" alignItems="center">
-            <Box bg="$blue100" p="$2" borderRadius="$full">
-              <AlertCircle size={20} color="#0066CC" />
+// Inside your HomeScreen component
+<HStack justifyContent="space-between" mt="$4" mb="$2" px="$4">
+      {actions.map((action) => (
+        <Pressable
+          key={action.id}
+          onPress={() => setActiveItem(activeItem === action.id ? null : action.id)}
+          style={{
+            width: '23%', // Slightly less than 25% to account for spacing
+          }}
+        >
+          <Box
+            bg={activeItem === action.id ? '$warningLight' : '$backgroundTertiary'}
+            p="$3"
+            borderRadius="$md"
+            alignItems="center"
+            borderWidth={1}
+            borderColor={activeItem === action.id ? '$brandSecondary' : 'transparent'}
+          >
+            <Box
+              bg="$white"
+              p="$2"
+              borderRadius="$full"
+              mb="$2"
+            >
+              <Image
+                source={action.icon}
+                alt={action.label}
+                width={24}
+                height={24}
+                resizeMode="contain"
+                style={{
+                  tintColor: activeItem === action.id ? '$brandSecondary' : '$textPrimary'
+                }}
+              />
             </Box>
-            <Text fontSize="$sm">Alerts</Text>
-          </VStack>
-
-          <VStack space="sm" alignItems="center">
-            <Box bg="$blue100" p="$2" borderRadius="$full">
-              <Phone size={20} color="#0066CC" />
-            </Box>
-            <Text fontSize="$sm">Call status</Text>
-          </VStack>
-
-          <VStack space="sm" alignItems="center">
-            <Box bg="$blue100" p="$2" borderRadius="$full">
-              <ArrowUpRight size={20} color="#0066CC" />
-            </Box>
-            <Text fontSize="$sm">Recent Payments</Text>
-          </VStack>
-        </HStack>
+            <Text 
+              fontSize="$sm"
+              fontWeight={activeItem === action.id ? '$bold' : '$normal'}
+              color={activeItem === action.id ? '$brandSecondary' : '$textPrimary'}
+            >
+              {action.label}
+            </Text>
+          </Box>
+        </Pressable>
+      ))}
+    </HStack>
       </VStack>
     </ScrollView>
   );
