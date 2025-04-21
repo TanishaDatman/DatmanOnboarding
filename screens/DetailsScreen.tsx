@@ -6,13 +6,13 @@ import {useOwnerApi} from '../hooks/useOwnerApi'
 
 const onboardingData = [
   {
-    icon: require('../assets/images/account_balance.png'),
+    icon: require('../assets/images/account_box.png'),
     title: 'Owner details',
     description: 'Includes name, address, contact, and identity proof.',
     route: 'OwnerDetails',
   },
   {
-    icon: require('../assets/images/store.png'),
+    icon: require('../assets/images/cases.png'),
     title: 'Business details',
     description: 'Includes business type, contact, address, proof of business, etc.',
     route: 'BusinessDetails',
@@ -24,7 +24,7 @@ const onboardingData = [
     route: 'TradingInfo',
   },
   {
-    icon: require('../assets/images/store.png'),
+    icon: require('../assets/images/account_balance.png'),
     title: 'Bank details',
     description: 'Includes account number, bank name, and related information.',
     route: 'BankDetails',
@@ -35,13 +35,24 @@ export default function DetailsScreen() {
   const navigation :any= useNavigation();
 
   return (
-    <Box flex={1} bg="$backgroundLight100" pt="$8" px="$4">
+    <Box flex={1} bg="$white" pt="$8" px="$4">
       <ScrollView>
-        {/* Header */}
-        <HStack alignItems="center" mb="$6">
-          <Text fontSize="$lg" mr="$2">←</Text>
-          <Text fontSize="$lg" fontWeight="$medium">Onboarding</Text>
-        </HStack>
+       
+
+        {/* arrow and stuff */}
+        <HStack alignItems="center" mt="$3" mb="$6">
+  <Pressable onPress={() => navigation.goBack()}>
+    <Image
+      source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
+      style={{ width: 20, height: 20, marginRight: 8 }}
+      
+    />
+  </Pressable>
+  <Text fontSize="$lg" fontWeight="$medium">Onboarding</Text>
+</HStack>
+        {/* arrow and stuff */}
+
+
 
         {/* Title */}
         <Text fontSize="$xl" fontWeight="$bold" mb="$2">
@@ -58,14 +69,14 @@ export default function DetailsScreen() {
               <Box
                 borderWidth={1}
                 borderColor="$borderLight300"
-                borderRadius="$lg"
+                borderRadius="$xl"
                 p="$4"
                 bg="$white"
                 shadowColor="rgba(0, 0, 0, 0.05)"
                 shadowOpacity={0.1}
               >
                 <HStack space="md" alignItems="flex-start">
-                  <Image source={item.icon} style={{ height: 24, width: 24, marginTop: 4 }} />
+                  <Image source={item.icon} style={{ height: 22, marginTop: 4 }} />
                   <VStack flex={1}>
                     <Text fontSize="$md" fontWeight="$semibold" mb="$1">
                       {item.title}
@@ -95,16 +106,20 @@ export default function DetailsScreen() {
       <HStack mt="$6" mb="$4" space="md" justifyContent="space-between">
         <Button
           variant="outline"
+          borderColor="$borderLight400"
           flex={1}
-          mr="$2"
-          onPress={() => console.log('Later')}
+          borderRadius="$full"
+          onPress={() => navigation.goBack()}
         >
           <Text fontSize="$md" fontWeight="$medium">Later</Text>
         </Button>
         <Button
-          flex={1}
-          bg="$black"
-          onPress={() => console.log('Next')}
+         variant="outline"
+         borderColor="$black"
+         bgColor='$black'
+         flex={1}
+         borderRadius="$full"
+        onPress={() => console.log('Next')}
         >
           <Text fontSize="$md" color="$white" fontWeight="$medium">Next</Text>
         </Button>

@@ -86,7 +86,7 @@ const OnboardingScreen = () => {
               borderColor="$borderLight400"
               flex={1}
               borderRadius="$full"
-              onPress={() => console.log('Later pressed')}
+              onPress={() => navigation.goBack()}
             >
               <ButtonText color="$textDark700">I'll do this later</ButtonText>
             </Button>
