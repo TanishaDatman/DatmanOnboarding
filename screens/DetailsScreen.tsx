@@ -2,6 +2,7 @@ import React from 'react';
 import { Image } from 'react-native';
 import { Box, Text, VStack, HStack, Pressable, Button, ScrollView } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
+import {useOwnerApi} from '../hooks/useOwnerApi'
 
 const onboardingData = [
   {

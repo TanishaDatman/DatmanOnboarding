@@ -93,6 +93,8 @@ import DocumentsBusiness from './screens/DocumentsBusiness';
 import ReviewBusiness from './screens/ReviewBusiness';
 import DocumentsBank from './screens/DocumentsBank';
 import CongoScreen from './screens/CongoScreen';
+import { Provider } from 'react-redux';
+import store from "./store/store"
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -134,6 +136,7 @@ function HomeStack() {
 
 export default function App() {
   return (
+    <Provider store={store}>
     <GluestackUIProvider config={customConfig}>
       <NavigationContainer>
         <Tab.Navigator
@@ -177,5 +180,6 @@ export default function App() {
         </Tab.Navigator>
       </NavigationContainer>
     </GluestackUIProvider>
+    </Provider>
   );
 }
