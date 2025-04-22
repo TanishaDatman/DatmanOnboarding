@@ -304,15 +304,29 @@ export default function HomeScreen() {
         </Box>
 
        
-        <Pressable onPress={() => navigation.navigate('Onboarding')}>
-  <Box borderRadius="$lg" overflow="hidden" width="100%" height={200}>
+        
+<Pressable onPress={() => navigation.navigate('Onboarding')}>
+  <Box 
+    borderRadius="$lg" 
+    overflow="hidden" 
+    width="100%" 
+    height={200}
+    // marginLeft={} // Negative margin to compensate for parent padding
+    marginRight={-16} // Negative margin to compensate for parent padding
+  >
     <ImageBackground
       source={require('../assets/images/card.png')}
       resizeMode="cover"
-      style={{ flex: 1 }}
-      imageStyle={{ borderRadius: 16 }}
+      style={{ 
+        flex: 1,
+        width: '100%',
+      }}
+      imageStyle={{ 
+        borderRadius: 16,
+        width: '100%',
+      }}
     >
-      <Box p="$4" flex={1} justifyContent="space-between">
+       <Box p="$4" flex={1} justifyContent="space-between">
         <VStack space="sm">
           <Text fontSize="$lg" fontWeight="$bold" color="$black">
             Available balance
@@ -326,14 +340,7 @@ export default function HomeScreen() {
       style={{ height: '100%', width: '100%' }}
     />
   </Box>
-  {/* <Box height={50} width={70}>
-    <LottieView
-      source={require('../assets/lotty.json')}
-      autoPlay
-      loop
-      style={{ height: '100%', width: '100%' }}
-    />
-  </Box> */}
+ 
   </Box>
         </VStack>
 
@@ -355,10 +362,10 @@ export default function HomeScreen() {
                 Verification progress
               </Text>
               <Text fontSize="$sm" fontWeight="$bold" color="$black">
-                30%
+                25%
               </Text>
             </HStack>
-            <Progress value={30} h="$1.5" bgColor="$coolGray300" rounded="$full">
+            <Progress value={25} h="$1.5" bgColor="$coolGray300" rounded="$full">
               <ProgressFilledTrack h="$1.5" bgColor="$black" />
             </Progress>
           </VStack>

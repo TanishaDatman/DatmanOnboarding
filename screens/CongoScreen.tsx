@@ -47,9 +47,9 @@ const CongoScreen = () => {
             mt="$8"
             borderRadius="$full"
             bg="$black"
-            onPress={() => navigation.navigate('HomeMain')} // Adjust navigation target as needed
+            onPress={() => navigation.navigate('HomeOnboard')} // Adjust navigation target as needed
           >
-            <ButtonText color="$white">Awesome!💪</ButtonText>
+            <ButtonText  color="$white">Awesome!💪</ButtonText>
           </Button>
         </VStack>
       </Center>

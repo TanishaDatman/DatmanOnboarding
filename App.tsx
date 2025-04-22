@@ -95,6 +95,7 @@ import DocumentsBank from './screens/DocumentsBank';
 import CongoScreen from './screens/CongoScreen';
 import { Provider } from 'react-redux';
 import store from "./store/store"
+import HomeOnboard from './screens/HomeOnboard';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -121,7 +122,7 @@ function HomeStack() {
   <Stack.Screen name="ReviewBusiness" component={ReviewBusiness} />
   <Stack.Screen name="DocumentsBank" component={DocumentsBank} />
   <Stack.Screen name="Congo" component={CongoScreen} />
-
+  <Stack.Screen name="HomeOnboard" component={HomeOnboard} />
   <Stack.Screen name="AddressBusiness" component={AddressBusiness} />
 
 
