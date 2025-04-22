@@ -220,6 +220,8 @@
 
 // screens/HomeScreen.tsx
 import React, { useState } from 'react';
+import LottieView from 'lottie-react-native';
+
 import {
   Box,
   Text,
@@ -301,56 +303,7 @@ export default function HomeScreen() {
           </Text>
         </Box>
 
-        {/* <Pressable onPress={() => navigation.navigate('Onboarding')}>
-        <Box borderRadius="$lg" overflow="hidden" width="100%"  $xl-width={'100vw'} height={200}>
-          <ImageBackground
-            source={require('../assets/images/card.png')}
-            resizeMode="cover"
-            $xl-width={'100vw'}
-            style={{ flex: 1 }}
-            imageStyle={{ borderRadius: 16 }}
-          >
-            <Box p="$4" flex={1} justifyContent="space-between">
-              <VStack space="sm">
-                <Text fontSize="$lg" fontWeight="$bold" color="$black">
-                  Available balance
-                </Text>
-                <Text fontSize="$3xl" fontWeight="$bold" color="$black">
-                  **********
-                </Text>
-              </VStack>
-
-              <VStack space="sm">
-                <HStack space="sm" alignItems="center">
-                  <Icon as={AlertCircleIcon} color="$amber600" />
-                  <Text fontSize="$sm" marginTop="$2" color="$black">
-                    Complete the onboarding verification to withdraw money.{' '}
-                    <Pressable onPress={() => navigation.navigate('Onboarding')}>
-                      <Text fontSize="$sm" underline color="$amber600">
-                        Complete
-                      </Text>
-                    </Pressable>
-                  </Text>
-                </HStack>
-
-                <VStack space="xs">
-                  <HStack justifyContent="space-between" alignItems="center">
-                    <Text fontSize="$sm" color="$black">
-                      Verification progress
-                    </Text>
-                    <Text fontSize="$sm" fontWeight="$bold" color="$black">
-                      30%
-                    </Text>
-                  </HStack>
-                  <Progress value={30} h="$1.5" bgColor="$coolGray300" rounded="$full">
-                    <ProgressFilledTrack h="$1.5" bgColor="$black" />
-                  </Progress>
-                </VStack>
-              </VStack>
-            </Box>
-          </ImageBackground>
-        </Box>
-        </Pressable> */}
+       
         <Pressable onPress={() => navigation.navigate('Onboarding')}>
   <Box borderRadius="$lg" overflow="hidden" width="100%" height={200}>
     <ImageBackground
@@ -364,9 +317,24 @@ export default function HomeScreen() {
           <Text fontSize="$lg" fontWeight="$bold" color="$black">
             Available balance
           </Text>
-          <Text fontSize="$3xl" fontWeight="$bold" color="$black">
-            **********
-          </Text>
+          <Box flexDirection="row">
+  <Box height={50} width={70}>
+    <LottieView
+      source={require('../assets/lotty.json')}
+      autoPlay
+      loop
+      style={{ height: '100%', width: '100%' }}
+    />
+  </Box>
+  <Box height={50} width={70}>
+    <LottieView
+      source={require('../assets/lotty.json')}
+      autoPlay
+      loop
+      style={{ height: '100%', width: '100%' }}
+    />
+  </Box>
+  </Box>
         </VStack>
 
         <VStack space="sm">
