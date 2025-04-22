@@ -1,11 +1,7 @@
-
-
-// usingredux
-
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { setContactDetails } from '../store/actions/ownerActions'; // Adjust the path if needed
+import { setContactDetails } from '../store/actions/ownerActions';
 import { 
   GluestackUIProvider,
   Box,
@@ -21,42 +17,62 @@ import {
 import { customConfig } from '../theme';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from '@gluestack-ui/themed';
+import { useForm, Controller } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+// Define Zod schema for validation
+const contactSchema = z.object({
+  email: z
+    .string()
+    .nonempty('Email is required')
+    .email('Please enter a valid email address'),
+  phone: z
+    .string()
+    .nonempty('Phone number is required')
+    .regex(/^\d{10}$/, 'Please enter a valid phone number'),
+});
 
 const Contact = () => {
-  const navigation: any = useNavigation();
-  
-  // Local state to manage the inputs
-  const [phn, setPhn] = useState('');
-  const [email, setEmail] = useState('');
-
-  // Dispatch to update Redux store
+  const navigation:any = useNavigation();
   const dispatch = useDispatch();
 
-  // Fetch owner details from Redux (you can use it if you want to show it or prefill fields)
-  const owner = useSelector((state: any) => state.owner.owner);
-  console.log('Owner details from redux:', owner);
+  // Fetch contact details from Redux
+  const contact = useSelector((state:any) => state.owner.contact);
 
-  // Fetch contact details from Redux (to prefill if exists)
-  const contact = useSelector((state: any) => state.owner.contact);
+  // Initialize react-hook-form with Zod resolver
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+    reset,
+  } = useForm({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      email: '',
+      phone: '',
+    },
+    mode: 'onTouched', // Validate on blur and change for better UX
+  });
 
+  // Prefill form with Redux contact details if available
   useEffect(() => {
-    // Prefill the contact details if they are already in Redux
-    if (contact.email) setEmail(contact.email);
-    if (contact.phone) setPhn(contact.phone);
-  }, [contact]);
+    if (contact.email || contact.phone) {
+      reset({
+        email: contact.email || '',
+        phone: contact.phone || '',
+      });
+    }
+  }, [contact, reset]);
 
-  const isNextEnabled = email.trim() && phn.trim();
-
-
-  // Handle form submission and dispatch to Redux
-  const handleNext = () => {
-    if(!isNextEnabled) return;
+  // Handle form submission
+  const onSubmit = (data:any) => {
     const contactDetails = {
-      email,
-      phone: phn,
+      email: data.email,
+      phone: data.phone,
     };
 
-    // Dispatch the action to store contact details in Redux
+    // Dispatch to Redux
     dispatch(setContactDetails(contactDetails));
     console.log('Submitted Contact Details:', contactDetails);
 
@@ -68,17 +84,16 @@ const Contact = () => {
     <GluestackUIProvider config={customConfig}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Box bg="$white" flex={1} p="$4">
-        
-           <HStack alignItems="center" mt="$3" mb="$6">
-                   <Pressable onPress={() => navigation.goBack()}>
-                     <Image
-                       source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
-                       style={{ width: 20, height: 20, marginRight: 8 }}
-                       alt="back button"
-                     />
-                   </Pressable>
-                   <Text fontSize="$lg" fontWeight="$medium">Owner Details</Text>
-                 </HStack>
+          <HStack alignItems="center" mt="$3" mb="$6">
+            <Pressable onPress={() => navigation.goBack()}>
+              <Image
+                source={require('../assets/images/arrow_forward.png')}
+                style={{ width: 20, height: 20, marginRight: 8 }}
+                alt="back button"
+              />
+            </Pressable>
+            <Text fontSize="$lg" fontWeight="$medium">Owner Details</Text>
+          </HStack>
 
           {/* Title */}
           <Text fontSize="$xl" fontWeight="$bold" mb="$3">
@@ -93,34 +108,62 @@ const Contact = () => {
           </Text>
 
           {/* Email Input */}
-          <VStack space="sm" mb="$6">
+          <VStack space="xs" mb="$6">
             <Text fontSize="$sm" fontWeight="$medium">Email ID</Text>
-            <Input
-              variant="underlined"
-              size="md"
-            >
-              <InputField
-                value={email}
-                onChangeText={setEmail}
-                placeholder="Email ID"
-              />
-            </Input>
+            <Controller
+              control={control}
+              name="email"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input 
+                  variant="underlined" 
+                  size="md"
+                  borderColor={errors.email ? '$red500' : '$borderLight300'}
+                >
+                  <InputField
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    placeholder="Email ID"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                  />
+                </Input>
+              )}
+            />
+            {errors.email && (
+              <Text fontSize="$xs" color="$red500" mt="$1">
+                {errors.email.message}
+              </Text>
+            )}
           </VStack>
 
           {/* Phone Number Input */}
-          <VStack space="sm" mb="$8">
+          <VStack space="xs" mb="$8">
             <Text fontSize="$sm" fontWeight="$medium">Phone number</Text>
-            <Input
-              variant="underlined"
-              size="md"
-              borderColor="$borderLight300"
-            >
-              <InputField
-                value={phn}
-                onChangeText={setPhn}
-                placeholder="Phone number"
-              />
-            </Input>
+            <Controller
+              control={control}
+              name="phone"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input 
+                  variant="underlined" 
+                  size="md" 
+                  borderColor={errors.phone ? '$red500' : '$borderLight300'}
+                >
+                  <InputField
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    placeholder="Phone number"
+                    keyboardType="phone-pad"
+                  />
+                </Input>
+              )}
+            />
+            {errors.phone && (
+              <Text fontSize="$xs" color="$red500" mt="$1">
+                {errors.phone.message}
+              </Text>
+            )}
           </VStack>
 
           {/* Buttons */}
@@ -136,17 +179,20 @@ const Contact = () => {
             </Button>
 
             <Button
-  flex={1}
-  bg={isNextEnabled ? "$black" : "$coolGray300"}
-  borderRadius="$full"
-  onPress={handleNext}
-  disabled={!isNextEnabled} 
-  opacity={isNextEnabled ? 1 : 0.7} 
->
-  <Text fontWeight="$medium" color={isNextEnabled ? "$white" : "$coolGray500"}>
-    Next
-  </Text>
-</Button>
+              flex={1}
+              bg={isValid ? '$black' : '$coolGray300'}
+              borderRadius="$full"
+              onPress={handleSubmit(onSubmit)}
+              disabled={!isValid}
+              opacity={isValid ? 1 : 0.7}
+            >
+              <ButtonText 
+                fontWeight="$medium" 
+                color={isValid ? '$white' : '$coolGray500'}
+              >
+                Next
+              </ButtonText>
+            </Button>
           </HStack>
         </Box>
       </ScrollView>

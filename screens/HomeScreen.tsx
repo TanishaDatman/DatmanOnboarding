@@ -286,7 +286,7 @@ export default function HomeScreen() {
           w="$8"
           resizeMode="contain"
         />
-        <Text fontSize="$xl" fontWeight="$bold">
+        <Text $lg-fontSize="$2xl" $sm-fontSize="$lg" $md-fontSize="$xl" fontWeight="$bold">
           John's Takeaway
         </Text>
       </HStack>
@@ -301,10 +301,12 @@ export default function HomeScreen() {
           </Text>
         </Box>
 
-        <Box borderRadius="$lg" overflow="hidden" width="100%" height={200}>
+        {/* <Pressable onPress={() => navigation.navigate('Onboarding')}>
+        <Box borderRadius="$lg" overflow="hidden" width="100%"  $xl-width={'100vw'} height={200}>
           <ImageBackground
             source={require('../assets/images/card.png')}
             resizeMode="cover"
+            $xl-width={'100vw'}
             style={{ flex: 1 }}
             imageStyle={{ borderRadius: 16 }}
           >
@@ -324,7 +326,7 @@ export default function HomeScreen() {
                   <Text fontSize="$sm" marginTop="$2" color="$black">
                     Complete the onboarding verification to withdraw money.{' '}
                     <Pressable onPress={() => navigation.navigate('Onboarding')}>
-                      <Text fontSize="$sm" color="$amber600">
+                      <Text fontSize="$sm" underline color="$amber600">
                         Complete
                       </Text>
                     </Pressable>
@@ -348,6 +350,56 @@ export default function HomeScreen() {
             </Box>
           </ImageBackground>
         </Box>
+        </Pressable> */}
+        <Pressable onPress={() => navigation.navigate('Onboarding')}>
+  <Box borderRadius="$lg" overflow="hidden" width="100%" height={200}>
+    <ImageBackground
+      source={require('../assets/images/card.png')}
+      resizeMode="cover"
+      style={{ flex: 1 }}
+      imageStyle={{ borderRadius: 16 }}
+    >
+      <Box p="$4" flex={1} justifyContent="space-between">
+        <VStack space="sm">
+          <Text fontSize="$lg" fontWeight="$bold" color="$black">
+            Available balance
+          </Text>
+          <Text fontSize="$3xl" fontWeight="$bold" color="$black">
+            **********
+          </Text>
+        </VStack>
+
+        <VStack space="sm">
+          <HStack alignItems="center" flexWrap="wrap">
+            <Icon as={AlertCircleIcon} color="$amber600" mr="$1" />
+
+            <Text fontSize="$xs" color="$black" underline>
+              Complete the onboarding verification to withdraw money.
+             
+            </Text>
+
+            
+          </HStack>
+
+          <VStack space="xs">
+            <HStack justifyContent="space-between" alignItems="center">
+              <Text fontSize="$sm" color="$black">
+                Verification progress
+              </Text>
+              <Text fontSize="$sm" fontWeight="$bold" color="$black">
+                30%
+              </Text>
+            </HStack>
+            <Progress value={30} h="$1.5" bgColor="$coolGray300" rounded="$full">
+              <ProgressFilledTrack h="$1.5" bgColor="$black" />
+            </Progress>
+          </VStack>
+        </VStack>
+      </Box>
+    </ImageBackground>
+  </Box>
+</Pressable>
+
 
         <Divider my="$2" />
 
