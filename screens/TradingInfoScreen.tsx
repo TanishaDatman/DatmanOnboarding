@@ -24,6 +24,7 @@ import { ModalContent } from '@gluestack-ui/themed';
 import { Center } from '@gluestack-ui/themed';
 import { ModalFooter } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
+import { Pressable } from '@gluestack-ui/themed';
 
 const TradingInfoScreen = () => {
   const [isSameAsRegistered, setIsSameAsRegistered] = useState(true);
@@ -48,12 +49,20 @@ const TradingInfoScreen = () => {
 
   return (
     <Box flex={1} bg="$backgroundLight0">
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }} p="$4">
-        {/* Header */}
-        <Text fontSize="$xl" fontWeight="$bold" mb="$2">
-          Trading information
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} pt="$7" p="$5">
+       <HStack alignItems="center" mt="$3" mb="$6">
+                       <Pressable onPress={() => navigation.goBack()}>
+                         <Image
+                           source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
+                           style={{ width: 20, height: 20, marginRight: 8 }}
+                           alt="back button"
+                         />
+                       </Pressable>
+                       <Text fontSize="$lg" fontWeight="$medium">Trading Information</Text>
+                     </HStack>
+                     <Text fontSize="$xl" fontWeight="$bold" mb="$2">
+          Trading Information
         </Text>
-
         {/* Description */}
         <Text color="$textLight500" fontSize="$sm" mb="$6">
           Provide us with the trading details of your business or select same as registered address if that applies.

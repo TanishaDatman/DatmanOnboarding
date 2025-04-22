@@ -1,228 +1,3 @@
-// import React, { useState } from 'react';
-// import { ScrollView } from 'react-native';
-// import { useSelector } from 'react-redux'
-// import { 
-//   GluestackUIProvider,
-//   Box,
-//   Text,
-//   VStack,
-//   HStack,
-//   Button,
-//   ButtonText,
-//   Input,
-//   InputField,
-  
-// } from '@gluestack-ui/themed';
-// import { customConfig } from '../theme';
-// import { useNavigation } from '@react-navigation/native';
-
-// const Contact = () => {
-// const navigation:any=useNavigation()
-// const [phn,setPhn]=useState("");
-// const [email,setEmail]=useState("")
-
-// const owner = useSelector((state: any) => state.owner.owner);
-//   console.log("Owner details from redux:", owner);
-
-
-//   return (
-//     <GluestackUIProvider config={customConfig}>
-//       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-//         <Box bg="$white" marginTop="$8" flex={1} p="$6">
-//           {/* Header */}
-         
-          
-//           {/* <Box h="$px" bg="$borderLight200" my="$4" /> */}
-          
-//           {/* Subheader */}
-//           <Text fontSize="$lg" fontWeight="$bold" mb="$5">
-//             Owner details
-//           </Text>
-          
-//           {/* Title */}
-//           <Text fontSize="$xl" fontWeight="$bold" mb="$3">
-//             Contact details
-//           </Text>
-          
-//           {/* Description */}
-//           <Text fontSize="$md" mb="$6">
-//             Onboarding is an essential step to activate my
-//             Datman account for accepting payments and
-//             receiving payouts.
-//           </Text>
-          
-//           {/* Email Input */}
-//           <VStack space="sm" mb="$6">
-//             <Text fontSize="$sm" fontWeight="$medium">Email ID</Text>
-//             <Input
-//               variant="underlined"
-//               size="md"
-              
-//               // isDisabled={true}
-//             //   borderColor="$borderLight300"
-//             >
-//               <InputField
-//                 // value="starkjohn@gmail.com"
-//                 value={email}
-//               onChangeText={setEmail}
-//                 placeholder="Email ID"
-//               />
-//             </Input>
-//           </VStack>
-          
-//           {/* Phone Number Input */}
-//           <VStack space="sm" mb="$8">
-//             <Text fontSize="$sm" fontWeight="$medium">Phone number</Text>
-//             <Input
-//               variant="underlined"
-//               size="md"
-
-//               // isDisabled={true}
-//               borderColor="$borderLight300"
-//             >
-//               <InputField
-// value={phn} onChangeText={setPhn}                placeholder="Phone number"
-//               />
-//             </Input>
-//           </VStack>
-          
-//           {/* Buttons */}
-//           <HStack space="md" justifyContent="space-between" mt="$8">
-//             <Button
-//               variant="outline"
-//               borderColor="$borderLight400"
-//               flex={1}
-//               borderRadius="$full"
-//               onPress={() => navigation.goBack()}
-//             >
-//               <ButtonText color="$textDark700">Later</ButtonText>
-//             </Button>
-            
-//             <Button
-//               bg="$primary500"
-//               flex={1}
-//             backgroundColor="$black"
-//             borderRadius="$full"
-//               onPress={() => navigation.navigate("Address")}
-//             >
-//               <ButtonText color="$white">Next</ButtonText>
-//             </Button>
-//           </HStack>
-//         </Box>
-//       </ScrollView>
-//     </GluestackUIProvider>
-//   );
-// };
-
-// export default Contact;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react';
-// import { ScrollView } from 'react-native';
-// import {
-//   GluestackUIProvider,
-//   Box,
-//   Text,
-//   VStack,
-//   HStack,
-//   Button,
-//   ButtonText,
-//   Input,
-//   InputField,
-// } from '@gluestack-ui/themed';
-// import { customConfig } from '../theme';
-// import { useNavigation } from '@react-navigation/native';
-
-
-// // 🧠 Import your custom hook
-// import { useOwnerApi } from '../hooks/useOwnerApi'; // ✅ make sure path is correct
-
-// const Contact = () => {
-//   const navigation:any = useNavigation();
-  
-//   // 🧠 Call your hook *inside* the component function
-//   const { postOwnerDetails, getOwnerDetails, loading } = useOwnerApi();
-//   const [email,setEmail]=useState("");
-//   const [phn,setPhn]=useState("");
-  
-//   return (
-//     <GluestackUIProvider config={customConfig}>
-//       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-//         <Box bg="$white" marginTop="$8" flex={1} p="$6">
-//           <Text fontSize="$lg" fontWeight="$bold" mb="$5">Owner details</Text>
-//           <Text fontSize="$xl" fontWeight="$bold" mb="$3">Contact details</Text>
-//           <Text fontSize="$md" mb="$6">
-//             Onboarding is an essential step to activate my Datman account for accepting payments and receiving payouts.
-//           </Text>
-
-//           <VStack space="sm" mb="$6">
-//             <Text fontSize="$sm" fontWeight="$medium">Email ID</Text>
-//             <Input variant="underlined" size="md">
-//               <InputField value={email}     onChangeText={setEmail}
-//  placeholder="Email ID" />
-//             </Input>
-//           </VStack>
-
-//           <VStack space="sm" mb="$8">
-//             <Text fontSize="$sm" fontWeight="$medium">Phone number</Text>
-//             <Input variant="underlined" size="md">
-//               <InputField value={phn}
-//     onChangeText={setPhn}
-//     placeholder="Phone number" />
-//             </Input>
-//           </VStack>
-
-//           <HStack space="md" justifyContent="space-between" mt="$8">
-//             <Button
-//               variant="outline"
-//               borderColor="$borderLight400"
-//               flex={1}
-//               borderRadius="$full"
-//               onPress={() => navigation.goBack()}
-//             >
-//               <ButtonText color="$textDark700">Later</ButtonText>
-//             </Button>
-
-//             <Button
-//               bg="$primary500"
-//               flex={1}
-//               backgroundColor="$black"
-//               borderRadius="$full"
-//               onPress={() => navigation.navigate("Address")}
-//             >
-//               <ButtonText color="$white">Next</ButtonText>
-//             </Button>
-//           </HStack>
-//         </Box>
-//       </ScrollView>
-//     </GluestackUIProvider>
-//   );
-// };
-
-// export default Contact;
-
-
-
 
 
 // usingredux
@@ -241,9 +16,11 @@ import {
   ButtonText,
   Input,
   InputField,
+  Pressable,
 } from '@gluestack-ui/themed';
 import { customConfig } from '../theme';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from '@gluestack-ui/themed';
 
 const Contact = () => {
   const navigation: any = useNavigation();
@@ -268,8 +45,12 @@ const Contact = () => {
     if (contact.phone) setPhn(contact.phone);
   }, [contact]);
 
+  const isNextEnabled = email.trim() && phn.trim();
+
+
   // Handle form submission and dispatch to Redux
   const handleNext = () => {
+    if(!isNextEnabled) return;
     const contactDetails = {
       email,
       phone: phn,
@@ -286,14 +67,18 @@ const Contact = () => {
   return (
     <GluestackUIProvider config={customConfig}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Box bg="$white" marginTop="$8" flex={1} p="$6">
-          {/* Header */}
-          {/* <Box h="$px" bg="$borderLight200" my="$4" /> */}
-
-          {/* Subheader */}
-          <Text fontSize="$lg" fontWeight="$bold" mb="$5">
-            Owner details
-          </Text>
+        <Box bg="$white" flex={1} p="$4">
+        
+           <HStack alignItems="center" mt="$3" mb="$6">
+                   <Pressable onPress={() => navigation.goBack()}>
+                     <Image
+                       source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
+                       style={{ width: 20, height: 20, marginRight: 8 }}
+                       alt="back button"
+                     />
+                   </Pressable>
+                   <Text fontSize="$lg" fontWeight="$medium">Owner Details</Text>
+                 </HStack>
 
           {/* Title */}
           <Text fontSize="$xl" fontWeight="$bold" mb="$3">
@@ -351,14 +136,17 @@ const Contact = () => {
             </Button>
 
             <Button
-              bg="$primary500"
-              flex={1}
-              backgroundColor="$black"
-              borderRadius="$full"
-              onPress={handleNext}
-            >
-              <ButtonText color="$white">Next</ButtonText>
-            </Button>
+  flex={1}
+  bg={isNextEnabled ? "$black" : "$coolGray300"}
+  borderRadius="$full"
+  onPress={handleNext}
+  disabled={!isNextEnabled} 
+  opacity={isNextEnabled ? 1 : 0.7} 
+>
+  <Text fontWeight="$medium" color={isNextEnabled ? "$white" : "$coolGray500"}>
+    Next
+  </Text>
+</Button>
           </HStack>
         </Box>
       </ScrollView>

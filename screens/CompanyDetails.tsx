@@ -11,6 +11,8 @@ import {
   ScrollView,
 } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
+import { Pressable } from '@gluestack-ui/themed';
+import { Image } from '@gluestack-ui/themed';
 
 const CompanyDetails = () => {
   const [companyNumber, setCompanyNumber] = useState('');
@@ -20,12 +22,19 @@ const CompanyDetails = () => {
   const isNextEnabled = companyNumber.trim() && legalName.trim();
 
   return (
-    <Box flex={1} bg="$backgroundLight0">
+    <Box flex={1} pt="$4" bg="$backgroundLight0">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} p="$4">
         {/* Header */}
-        <Text fontSize="$xl" fontWeight="$bold" mb="$2">
-          Business details
-        </Text>
+         <HStack alignItems="center" mt="$3" mb="$6">
+                 <Pressable onPress={() => navigation.goBack()}>
+                   <Image
+                     source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
+                     style={{ width: 20, height: 20, marginRight: 8 }}
+                     alt="back button"
+                   />
+                 </Pressable>
+                 <Text fontSize="$lg" fontWeight="$medium">Business Details</Text>
+               </HStack>
 
         {/* Subheader */}
         <Text fontSize="$lg" fontWeight="$semibold" mb="$1">

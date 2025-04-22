@@ -147,6 +147,7 @@ import {
   SelectItem,
   SelectInput,
   SelectContent,
+  Image,
 } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { ChevronDownIcon } from '@gluestack-ui/themed';
@@ -189,7 +190,11 @@ export default function Address() {
     }
   }, [address]);
 
+  const isNextEnabled = country.trim() && postCode.trim() && houseNo.trim() && street.trim() && town.trim() && county.trim();
+
+
   const handleNext = () => {
+    if(!isNextEnabled) return;
     const addressDetails = {
       country,
       postCode,
@@ -211,13 +216,16 @@ export default function Address() {
     <Box flex={1} bg="#F5F6F8" px="$4" pt="$6" borderTopLeftRadius={30} borderTopRightRadius={30}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <HStack alignItems="center" mb="$6">
-          <Pressable onPress={() => navigation.goBack()}>
-            <Text fontSize="$xl" mr="$2">←</Text>
-          </Pressable>
-          <Text fontSize="$lg" fontWeight="$medium">Owner address</Text>
-        </HStack>
-
+        <HStack alignItems="center" mt="$3" mb="$6">
+                <Pressable onPress={() => navigation.goBack()}>
+                  <Image
+                    source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
+                    style={{ width: 20, height: 20, marginRight: 8 }}
+                    alt="back button"
+                  />
+                </Pressable>
+                <Text fontSize="$lg" fontWeight="$medium">Owner Address</Text>
+              </HStack>
         {/* Title & Description */}
         <Text fontSize="$2xl" fontWeight="$bold" mb="$2">Owner address</Text>
         <Text fontSize="$sm" color="$textLight500" mb="$6">
@@ -261,7 +269,11 @@ export default function Address() {
             selectedValue={country}
             onValueChange={(value) => setCountry(value)}
           >
-            <SelectTrigger borderBottomWidth={1} borderColor="$borderLight300">
+            <SelectTrigger borderBottomWidth={1}
+      borderColor="$borderLight300"
+      borderWidth={0} // removes other borders
+      borderRadius={0} // no rounding
+      px={0}>
               <SelectInput placeholder="Country" />
               <SelectIcon as={ChevronDownIcon} />
             </SelectTrigger>
@@ -289,14 +301,18 @@ export default function Address() {
         >
           <ButtonText color="$black">Later</ButtonText>
         </Button>
-        <Button
-          bg="$black"
-          flex={1}
-          borderRadius="$full"
-          onPress={handleNext} // Save and navigate
-        >
-          <ButtonText color="$white">Next</ButtonText>
-        </Button>
+       <Button
+         flex={1}
+         bg={isNextEnabled ? "$black" : "$coolGray300"}
+         borderRadius="$full"
+         onPress={handleNext}
+         disabled={!isNextEnabled} 
+         opacity={isNextEnabled ? 1 : 0.7} 
+       >
+         <Text fontWeight="$medium" color={isNextEnabled ? "$white" : "$coolGray500"}>
+           Next
+         </Text>
+       </Button>
       </HStack>
     </Box>
   );

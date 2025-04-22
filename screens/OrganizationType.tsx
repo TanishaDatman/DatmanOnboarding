@@ -9,10 +9,12 @@ import {
   RadioLabel,
   CircleIcon,
   Box,
-  Button
+  Button,
+  Pressable
 } from '@gluestack-ui/themed';
 import { HStack } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from '@gluestack-ui/themed';
 
 const organisationOptions = [
   { value: 'association', label: 'Association Incorporated' },
@@ -29,11 +31,17 @@ const OrganisationType = () => {
   return (
     <Box flex={1} px="$4" py="$6" bg="$backgroundLight0">
       <VStack space="lg">
-        <HStack alignItems="center" mb="$3" mt="$4">
-                        <Text fontSize="$lg" mr="$2">←</Text>
-                        <Text fontSize="$lg" fontWeight="$medium">Business details</Text>
-                      </HStack>
-        <Text fontSize="$xl" marginTop="$5" fontWeight="$bold">
+       <HStack alignItems="center" mt="$3">
+               <Pressable onPress={() => navigation.goBack()}>
+                 <Image
+                   source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
+                   style={{ width: 20, height: 20, marginRight: 8 }}
+                   alt="back button"
+                 />
+               </Pressable>
+               <Text fontSize="$lg" fontWeight="$medium">Owner Details</Text>
+             </HStack>
+        <Text fontSize="$xl" marginTop="$2" fontWeight="$bold">
           Choose your organisation type
         </Text>
         
@@ -44,7 +52,7 @@ const OrganisationType = () => {
         <RadioGroup 
           value={selectedValue} 
           onChange={setSelectedValue}
-          mt="$6"
+          mt="$2"
           mb="$5"
         >
           {organisationOptions.map((option) => (

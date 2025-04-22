@@ -3,6 +3,7 @@ import { VStack, Text, Pressable, Box, HStack, Icon } from '@gluestack-ui/themed
 import { CheckCircle, Home, Store, Users, Grid } from 'lucide-react-native';
 import { Button } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from '@gluestack-ui/themed';
 
 const businessOptions = [
   {
@@ -38,9 +39,15 @@ const BusinessDetailsScreen = () => {
   return (
     
     <VStack flex={1} px="$4" py="$6" bg="$backgroundLight0" space="lg">
-       <HStack alignItems="center" mb="$3" mt="$4">
-                <Text fontSize="$lg" mr="$2">←</Text>
-                <Text fontSize="$lg" fontWeight="$medium">Business details</Text>
+        <HStack alignItems="center" mt="$3" mb="$3">
+                <Pressable onPress={() => navigation.goBack()}>
+                  <Image
+                    source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
+                    style={{ width: 20, height: 20, marginRight: 8 }}
+                    alt="back button"
+                  />
+                </Pressable>
+                <Text fontSize="$lg" fontWeight="$medium">Business Details</Text>
               </HStack>
       <Text fontSize="$xl" fontWeight="$bold">Which best describes your business?</Text>
       <Text color="$textLight500" fontSize="$sm">

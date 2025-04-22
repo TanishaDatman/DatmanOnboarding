@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { 
   GluestackUIProvider,
@@ -10,27 +10,42 @@ import {
   ButtonText,
   Input,
   InputField,
+  Image,
   
 } from '@gluestack-ui/themed';
 import { customConfig } from '../theme';
 import { useNavigation } from '@react-navigation/native';
+import { Pressable } from '@gluestack-ui/themed';
 
 const ContactBusiness = () => {
 const navigation:any=useNavigation()
 
+const [email,setEmail]=useState("")
+const [phn,setPhn]=useState("")
+const [url,setUrl]=useState("")
+
+const isNextEnabled = email.trim() && phn.trim() && url.trim();
+
+const handleNext = () => {
+    if (!isNextEnabled) return;
+      navigation.navigate("AddressBusiness");
+  };
+
   return (
     <GluestackUIProvider config={customConfig}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Box bg="$white" marginTop="$8" flex={1} p="$6">
-          {/* Header */}
+        <Box bg="$white" flex={1} pt="$7" p="$4">
          
-          
-          {/* <Box h="$px" bg="$borderLight200" my="$4" /> */}
-          
-          {/* Subheader */}
-          <Text fontSize="$lg" fontWeight="$bold" mb="$5">
-          Business Contact details
-          </Text>
+          <HStack alignItems="center" mt="$3" mb="$6">
+                  <Pressable onPress={() => navigation.goBack()}>
+                    <Image
+                      source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
+                      style={{ width: 20, height: 20, marginRight: 8 }}
+                      alt="back button"
+                    />
+                  </Pressable>
+                  <Text fontSize="$lg" fontWeight="$medium">Business Contact Details</Text>
+                </HStack>
           
           {/* Title */}
           <Text fontSize="$xl" fontWeight="$bold" mb="$3">
@@ -50,11 +65,13 @@ const navigation:any=useNavigation()
             <Input
               variant="underlined"
               size="md"
-              isDisabled={true}
+              // isDisabled={true}
             //   borderColor="$borderLight300"
+          
             >
               <InputField
-                value="starkjohn@gmail.com"
+                value={email}
+                onChangeText={setEmail}
                 placeholder="Email ID"
               />
             </Input>
@@ -66,12 +83,13 @@ const navigation:any=useNavigation()
             <Input
               variant="underlined"
               size="md"
-              isDisabled={true}
-              borderColor="$borderLight300"
+              // isDisabled={true}
+              // borderColor="$borderLight300"
             >
               <InputField
-                value="+44 8829012003"
+                value={phn}
                 placeholder="Phone number"
+                onChangeText={setPhn}
               />
             </Input>
           </VStack>
@@ -80,12 +98,13 @@ const navigation:any=useNavigation()
             <Input
               variant="underlined"
               size="md"
-              isDisabled={true}
+              // isDisabled={true}
               borderColor="$borderLight300"
             >
               <InputField
-                value="Company URL"
-                placeholder="Phone number"
+                value={url}
+                placeholder="Company URL"
+                onChangeText={setUrl}
               />
             </Input>
           </VStack>
@@ -103,14 +122,17 @@ const navigation:any=useNavigation()
             </Button>
             
             <Button
-              bg="$primary500"
-              flex={1}
-            backgroundColor="$black"
-            borderRadius="$full"
-              onPress={() => navigation.navigate("AddressBusiness")}
-            >
-              <ButtonText color="$white">Next</ButtonText>
-            </Button>
+  flex={1}
+  bg={isNextEnabled ? "$black" : "$coolGray300"}
+  borderRadius="$full"
+  onPress={handleNext}
+  disabled={!isNextEnabled} 
+  opacity={isNextEnabled ? 1 : 0.7} 
+>
+  <Text fontWeight="$medium" color={isNextEnabled ? "$white" : "$coolGray500"}>
+    Next
+  </Text>
+</Button>
           </HStack>
         </Box>
       </ScrollView>

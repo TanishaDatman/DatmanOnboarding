@@ -11,6 +11,8 @@ import {
   ScrollView,
 } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
+import { Pressable } from '@gluestack-ui/themed';
+import { Image } from '@gluestack-ui/themed';
 
 const BankDetailsScreen = () => {
   const [accountholder, setAccountholder] = useState('');
@@ -26,16 +28,23 @@ const BankDetailsScreen = () => {
     <Box flex={1} bg="$backgroundLight0">
       <ScrollView 
         contentContainerStyle={{ flexGrow: 1 }} 
-        p="$4"
+        p="$5"
+        pt="$7"
         keyboardShouldPersistTaps="handled"
       >
         {/* Header Section */}
         <VStack space="sm" mb="$6">
-          <Text fontSize="$2xl" fontWeight="$bold" color="$textDark800">
-            Bank details
-          </Text>
-          
-          <Text fontSize="$lg" fontWeight="$semibold" color="$textDark800">
+         <HStack alignItems="center" mt="$3" mb="$6">
+                               <Pressable onPress={() => navigation.goBack()}>
+                                 <Image
+                                   source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
+                                   style={{ width: 20, height: 20, marginRight: 8 }}
+                                   alt="back button"
+                                 />
+                               </Pressable>
+                               <Text fontSize="$lg" fontWeight="$medium">Bank Details</Text>
+                             </HStack>
+          <Text fontSize="$xl" fontWeight="$semibold" color="$textDark800">
             Set up your payout(bank) account
           </Text>
           

@@ -52,16 +52,20 @@ export default function DocumentsBank() {
   const isNextEnabled = statement || cheque;
 
   return (
-    <Box flex={1} p="$4" marginTop="$5">
-      <Box flex={1} p="$2">
+    <Box flex={1} p="$5" pt="$7">
+      <Box flex={1} >
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* Header */}
-          <HStack alignItems="center" mb="$6">
-            <Pressable onPress={() => navigation.goBack()}>
-              <Text fontSize="$xl" mr="$2">←</Text>
-            </Pressable>
-            <Text fontSize="$lg" fontWeight="$medium">Upload documents</Text>
-          </HStack>
+           <HStack alignItems="center" mt="$3" mb="$6">
+                                 <Pressable onPress={() => navigation.goBack()}>
+                                   <Image
+                                     source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
+                                     style={{ width: 20, height: 20, marginRight: 8 }}
+                                     alt="back button"
+                                   />
+                                 </Pressable>
+                                 <Text fontSize="$lg" fontWeight="$medium">Upload Documents</Text>
+                               </HStack>
 
           {/* Title */}
           <Text fontSize="$2xl" fontWeight="$bold" mb="$2">
