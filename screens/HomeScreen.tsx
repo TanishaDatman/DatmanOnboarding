@@ -326,14 +326,14 @@ export default function HomeScreen() {
       style={{ height: '100%', width: '100%' }}
     />
   </Box>
-  <Box height={50} width={70}>
+  {/* <Box height={50} width={70}>
     <LottieView
       source={require('../assets/lotty.json')}
       autoPlay
       loop
       style={{ height: '100%', width: '100%' }}
     />
-  </Box>
+  </Box> */}
   </Box>
         </VStack>
 

@@ -10,6 +10,9 @@ import { setOwnerDetails } from '../store/actions/ownerActions';
 import { useDispatch } from 'react-redux';
 import { Pressable } from '@gluestack-ui/themed';
 import { useForm, Controller } from 'react-hook-form';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { Platform } from 'react-native';
+
 
 export default function OwnerDetailsScreen() {
   const navigation: any = useNavigation();
@@ -24,22 +27,16 @@ export default function OwnerDetailsScreen() {
       dob: ''
     }
   });
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
-  // const isValidDate = (dateStr: string) => {
-  //   const regex = /^\d{2}\/\d{2}\/\d{4}$/;
-  //   if (!regex.test(dateStr)) return false;
+const formatDateToDisplay = (date: Date) => {
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+};
 
-  //   const [day, month, year] = dateStr.split('/').map(Number);
-  //   const date = new Date(year, month - 1, day);
-    
-  //   return (
-  //     date.getDate() === day &&
-  //     date.getMonth() === month - 1 &&
-  //     date.getFullYear() === year &&
-  //     year >= 1900 &&
-  //     year <= new Date().getFullYear()
-  //   );
-  // };
+  
   const isValidDate = (dateStr: string) => {
     // Allow partial input during typing
     if (dateStr.length < 10) return true;
@@ -191,27 +188,6 @@ export default function OwnerDetailsScreen() {
           </Box>
 
           {/* <Box>
-            <Text fontSize="$sm" mb="$1">Date of Birth</Text>
-            <Controller
-              control={control}
-              name="dob"
-              rules={{
-                required: 'Date of birth is required',
-                validate: value => isValidDate(value) || 'Invalid date format (DD/MM/YYYY)'
-              }}
-              render={({ field: { onChange, value } }) => (
-                <Input variant="underlined">
-                  <InputField
-                    value={value}
-                    onChangeText={onChange}
-                    placeholder="DD/MM/YYYY"
-                  />
-                </Input>
-              )}
-            />
-            {errors.dob && <Text color="$red500" fontSize="$xs">{errors.dob.message}</Text>}
-          </Box> */}
-          <Box>
   <Text fontSize="$sm" mb="$1">Date of Birth</Text>
   <Controller
     control={control}
@@ -233,6 +209,47 @@ export default function OwnerDetailsScreen() {
           maxLength={10} // DD/MM/YYYY is 10 characters
         />
       </Input>
+    )}
+  />
+  {errors.dob && <Text color="$red500" fontSize="$xs">{errors.dob.message}</Text>}
+</Box> */}
+
+
+<Box>
+  <Text fontSize="$sm" mb="$1">Date of Birth</Text>
+  <Controller
+    control={control}
+    name="dob"
+    rules={{ required: 'Date of birth is required' }}
+    render={({ field: { onChange, value } }) => (
+      <>
+        <Pressable onPress={() => setShowDatePicker(true)}>
+          <Input variant="underlined" isReadOnly>
+            <InputField
+              value={value}
+              placeholder="Date of Birth"
+              editable={false}
+              pointerEvents="none"
+            />
+          </Input>
+        </Pressable>
+
+        {showDatePicker && (
+          <DateTimePicker
+            mode="date"
+            display={Platform.OS === 'ios' ? 'inline' : 'default'}
+            maximumDate={new Date()}
+            value={value ? new Date(value.split('/').reverse().join('-')) : new Date()}
+            onChange={(event, selectedDate) => {
+              setShowDatePicker(false);
+              if (selectedDate) {
+                const formatted = formatDateToDisplay(selectedDate);
+                onChange(formatted);
+              }
+            }}
+          />
+        )}
+      </>
     )}
   />
   {errors.dob && <Text color="$red500" fontSize="$xs">{errors.dob.message}</Text>}
