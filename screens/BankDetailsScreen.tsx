@@ -17,7 +17,6 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-// Define schema using Zod
 const BankDetailsSchema = z
   .object({
     accountholder: z.string().min(4, 'Account holder name is required'),
@@ -57,7 +56,6 @@ const BankDetailsScreen = () => {
         pt="$7"
         keyboardShouldPersistTaps="handled"
       >
-        {/* Header */}
         <VStack space="sm" mb="$6">
           <HStack alignItems="center" mt="$3" mb="$6">
             <Pressable onPress={() => navigation.goBack()}>
@@ -78,7 +76,6 @@ const BankDetailsScreen = () => {
           </Text>
         </VStack>
 
-        {/* Form */}
         <VStack space="md" mb="$8">
           <VStack space="xs">
             <Controller

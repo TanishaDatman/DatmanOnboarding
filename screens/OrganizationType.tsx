@@ -34,7 +34,7 @@ const OrganisationType = () => {
        <HStack alignItems="center" mt="$3">
                <Pressable onPress={() => navigation.goBack()}>
                  <Image
-                   source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
+                   source={require('../assets/images/arrow_forward.png')} 
                    style={{ width: 20, height: 20, marginRight: 8 }}
                    alt="back button"
                  />
@@ -64,8 +64,8 @@ const OrganisationType = () => {
               p="$2"
             >
               <RadioIndicator mr="$2" $checked={{
-          borderColor: "$green", // Border color when checked
-          bg: "$green"         // Fill color when checked
+          borderColor: "$green", 
+          bg: "$green"         
         }}>
                 <RadioIcon as={CircleIcon} />
               </RadioIndicator>

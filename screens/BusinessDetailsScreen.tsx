@@ -88,7 +88,7 @@ const BusinessDetailsScreen = () => {
         <Image
           source={option.icon}
           style={{
-            width: 32, // Adjust icon size here
+            width: 32, 
             height: 32,
             resizeMode: 'contain',
           }}
@@ -105,7 +105,7 @@ const BusinessDetailsScreen = () => {
         <Icon
           as={CheckCircle}
           color="$green"
-          size="md" // size="sm" was a bit too small / misaligned
+          size="md" 
           style={{ marginLeft: 8 }}
         />
       )}
