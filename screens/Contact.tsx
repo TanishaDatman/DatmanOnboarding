@@ -52,10 +52,9 @@ const Contact = () => {
       email: '',
       phone: '',
     },
-    mode: 'onTouched', // Validate on blur and change for better UX
+    mode: 'onTouched', 
   });
 
-  // Prefill form with Redux contact details if available
   useEffect(() => {
     if (contact.email || contact.phone) {
       reset({

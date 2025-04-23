@@ -22,7 +22,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { ChevronDownIcon } from '@gluestack-ui/themed';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAddressDetails } from '../store/actions/ownerActions'; // Adjust path based on your project structure
+import { setAddressDetails } from '../store/actions/ownerActions'; 
 
 export default function Address() {
   const navigation: any = useNavigation();
@@ -38,10 +38,10 @@ export default function Address() {
 
   const countries = ['UK', 'USA', 'Mexico', 'Canada', 'Australia', 'Ireland'];
   
-  // Redux state for address details (if pre-filled)
+  
   const address = useSelector((state: any) => state.owner.address);
 
-  const [country, setCountry] = useState(address?.country || '');  // prefill if exists
+  const [country, setCountry] = useState(address?.country || '');  
   const [postCode, setPostCode] = useState(address?.postCode || '');
   const [houseNo, setHouseNo] = useState(address?.houseNo || '');
   const [street, setStreet] = useState(address?.street || '');
@@ -49,7 +49,7 @@ export default function Address() {
   const [county, setCounty] = useState(address?.county || '');
 
   useEffect(() => {
-    // Optional: Prefill if you have address details in Redux already
+   
     if (address) {
       setCountry(address.country);
       setPostCode(address.postCode);
@@ -74,11 +74,9 @@ export default function Address() {
       county,
     };
 
-    // Dispatch the action to save the address in Redux
     dispatch(setAddressDetails(addressDetails));
     // console.log('Submitted Address Details:', addressDetails);
 
-    // Navigate to the next screen
     navigation.navigate('Documents');
   };
 
@@ -89,7 +87,7 @@ export default function Address() {
         <HStack alignItems="center" mt="$3" mb="$6">
                 <Pressable onPress={() => navigation.goBack()}>
                   <Image
-                    source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
+                    source={require('../assets/images/arrow_forward.png')}
                     style={{ width: 20, height: 20, marginRight: 8 }}
                     alt="back button"
                   />
@@ -159,7 +157,6 @@ export default function Address() {
         </Box>
       </ScrollView>
 
-      {/* Footer Buttons */}
       <HStack space="md" justifyContent="space-between" mt="auto" mb="$4">
         <Button
           variant="outline"

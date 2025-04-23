@@ -19,7 +19,7 @@ const CongoScreen = () => {
         <VStack space="xl" alignItems="center">
           {/* Checkmark Image */}
           <Image
-            source={require('../assets/images/tick.png')} // Replace with your checkmark image
+            source={require('../assets/images/tick.png')}
             alt="Success checkmark"
             size="lg"
             mb="$4"
@@ -47,7 +47,7 @@ const CongoScreen = () => {
             mt="$8"
             borderRadius="$full"
             bg="$black"
-            onPress={() => navigation.navigate('HomeOnboard')} // Adjust navigation target as needed
+            onPress={() => navigation.navigate('HomeOnboard')} 
           >
             <ButtonText  color="$white">Awesome!💪</ButtonText>
           </Button>
