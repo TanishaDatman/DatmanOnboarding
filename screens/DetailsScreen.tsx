@@ -41,7 +41,7 @@ export default function DetailsScreen() {
 
   const [ownerStatus, setOwnerStatus] = useState<'pending' | 'inProgress'>('pending');
 
-  const ownerId = 31;
+  const ownerId = 33;
 
   useEffect(() => {
     const fetchOwner = async () => {

@@ -18,11 +18,13 @@ import {
   SelectInput,
   SelectContent,
   Image,
+  Input,
 } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { ChevronDownIcon } from '@gluestack-ui/themed';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAddressDetails } from '../store/actions/ownerActions'; 
+import { InputField } from '@gluestack-ui/themed';
 
 export default function Address() {
   const navigation: any = useNavigation();
@@ -103,14 +105,18 @@ export default function Address() {
         {/* Input Fields */}
         <VStack space="md" mb="$6">
           {fields.map((label, index) => (
-            <Box key={index} borderBottomWidth={1} borderColor="$borderLight300" pb="$2">
-              <TextInput
+            <Box key={index}  borderColor="$borderLight300" pb="$2">
+            <Input
+            variant='underlined'
+              style={{
+                // fontSize: 16,
+                paddingVertical: 8,
+                // color: '#000',
+              }}
+            >
+              <InputField
+            
                 placeholder={label}
-                style={{
-                  fontSize: 16,
-                  paddingVertical: 8,
-                  color: '#000',
-                }}
                 placeholderTextColor="#888"
                 value={
                   label === 'Post code' ? postCode :
@@ -127,7 +133,8 @@ export default function Address() {
                   if (label === 'County') setCounty(text);
                 }}
               />
-            </Box>
+            </Input>
+          </Box>
           ))}
         </VStack>
 
@@ -140,7 +147,7 @@ export default function Address() {
             <SelectTrigger borderBottomWidth={1}
       borderColor="$borderLight300"
       borderWidth={0} // removes other borders
-      borderRadius={0} // no rounding
+      borderRadius={0} 
       px={0}>
               <SelectInput placeholder="Country" />
               <SelectIcon as={ChevronDownIcon} />

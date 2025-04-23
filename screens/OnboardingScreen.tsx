@@ -22,7 +22,7 @@ const OnboardingScreen = () => {
 
   return (
     <GluestackUIProvider config={customConfig}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1,  }} >
         <Box bg="$white" flex={1} pt="$8" p="$6">
  <HStack alignItems="center" mt="$3">
                <Pressable onPress={() => navigation.goBack()}>
@@ -40,19 +40,19 @@ const OnboardingScreen = () => {
             Onboarding is an essential step to activate your account for accepting payments and receiving payouts.
           </Text>
           
-         
-<Image
+       <Box  flex={1} justifyContent='center' alignItems='center' >
+       <Image
+
   source={require('../assets/images/frame.png')}
   alt="Descriptive text"
-  resizeMode="cover"
   marginBottom="$3"
-  style={{
-    width: '100%',
-    // height: '100%', 
-    height: 150, 
-    borderRadius: 16,
-  }}
+  size='2xl'
+flex={1}
+borderRadius={16}
+
 />
+        </Box>  
+
 
           <Text fontSize="$xl" fontWeight="$bold" mb="$4">
             What details are required?

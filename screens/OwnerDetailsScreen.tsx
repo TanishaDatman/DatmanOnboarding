@@ -33,6 +33,19 @@ export default function OwnerDetailsScreen() {
   });
   const [showDatePicker, setShowDatePicker] = useState(false);
 
+  const formatDateWithSlashes = (input: string): string => {
+    // Remove all non-digit characters
+    const digits = input.replace(/\D/g, '');
+
+    // Add slashes automatically based on input length
+    if (digits.length <= 2) {
+      return digits;
+    }
+    if (digits.length <= 4) {
+      return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+    }
+    return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4, 8)}`;
+  };
   
 
 const formatDateToDisplay = (date: Date) => {
@@ -193,26 +206,18 @@ const formatDateToDisplay = (date: Date) => {
     render={({ field: { onChange, value } }) => (
       <>
         {Platform.OS === 'web' ? (
-          <div style={{ width: '100%' }}>
-            <DatePicker
-              selected={value ? new Date(value.split('/').reverse().join('-')) : null}
-              onChange={(date: Date | null) => {
-                if (date) {
-                  const formatted = formatDateToDisplay(date);
-                  onChange(formatted);
-                } else {
-                  onChange(''); // Handle case when date is cleared
-                }
-              }}
-              dateFormat="dd/MM/yyyy"
-              placeholderText="Date of Birth"
-              showYearDropdown
-              dropdownMode="select"
-              maxDate={new Date()}
-              className="date-picker-input"
-              wrapperClassName="date-picker-wrapper"
-            />
-          </div>
+          <Input variant="underlined">
+          <InputField
+            value={value}
+            onChangeText={(text) => {
+              const formatted = formatDateWithSlashes(text);
+              onChange(formatted);
+            }}
+            placeholder="DD/MM/YYYY"
+            maxLength={10}
+            keyboardType="numeric"
+          />
+        </Input>
         ) : (
           <>
             <Pressable onPress={() => setShowDatePicker(true)}>

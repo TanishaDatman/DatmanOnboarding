@@ -40,6 +40,7 @@ export default function DocumentsUpload() {
       const result = await DocumentPicker.getDocumentAsync({
         type: ['image/*', 'application/pdf'],
       });
+      console.log('result',result)
 
       if (!result.canceled) {
         const selectedFile = result.assets[0];
@@ -73,7 +74,7 @@ export default function DocumentsUpload() {
       ...owner,
       ...contact,
       ...address,
-      image: image?.path,
+      image: image?.name,
     };
 
     try {
