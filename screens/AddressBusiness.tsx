@@ -21,6 +21,8 @@ import { SelectPortal } from '@gluestack-ui/themed';
 import { SelectBackdrop } from '@gluestack-ui/themed';
 import { SelectContent } from '@gluestack-ui/themed';
 import { SelectItem } from '@gluestack-ui/themed';
+import { setBusinessAddress } from '../store/actions/bussinessActions';
+import { useDispatch } from 'react-redux';
 
 export default function AddressBusiness() {
   const navigation: any = useNavigation();
@@ -67,6 +69,8 @@ export default function AddressBusiness() {
                        town.trim() && 
                        county.trim() && 
                        country.trim();
+const dispatch=useDispatch()
+
 
   const handleNext = () => {
     if (!isNextEnabled) return;
@@ -79,8 +83,7 @@ export default function AddressBusiness() {
       county,
       country
     };
-    // You would typically dispatch this data to your store here
-    // dispatch(setBusinessAddress(formData));
+          dispatch(setBusinessAddress(formData));
     navigation.navigate('DocumentsBusiness');
   };
 

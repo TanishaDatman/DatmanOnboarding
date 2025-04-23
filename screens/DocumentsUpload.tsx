@@ -40,6 +40,7 @@ export default function DocumentsUpload() {
       const result = await DocumentPicker.getDocumentAsync({
         type: ['image/*', 'application/pdf'],
       });
+      console.log("result is ----======>",result)
 
       if (!result.canceled) {
         const selectedFile = result.assets[0];
@@ -69,11 +70,12 @@ export default function DocumentsUpload() {
     // console.log('Image details from redux:', image);
 
   const handleNoDocumentClick = async () => {
+    const selectedFile = passport || license
     const details = {
       ...owner,
       ...contact,
       ...address,
-      image: image?.path,
+      image: selectedFile?.name
     };
 
     try {

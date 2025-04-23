@@ -105,7 +105,7 @@ export default function Review() {
 
         {/* Section: Address */}
         <Text fontSize="$sm" fontWeight="$semibold" mb="$2">Contact details</Text>
-        <Box bg="$white" borderRadius="$lg" borderColor="$blue500" borderWidth={1} p="$4" mb="$6">
+        <Box bg="$white" borderRadius="$lg" borderColor="$$white" borderWidth={1} p="$4" mb="$6">
           <HStack justifyContent="space-between" alignItems="flex-start">
             <Text fontSize="$sm" color="$gray700" flexShrink={1}>
             {ownerAddress.houseNo} {ownerAddress.street} {ownerAddress.postCode} {ownerAddress.town} {ownerAddress.county} {ownerAddress.country}

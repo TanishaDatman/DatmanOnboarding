@@ -33,7 +33,7 @@ const OrganisationType = () => {
   const dispatch = useDispatch();
 
   const onSubmit = (data: any) => {
-    dispatch(setBusinessType(data));
+    dispatch(setBusinessType(selectedValue));
       navigation.navigate("Company");
     };
 
