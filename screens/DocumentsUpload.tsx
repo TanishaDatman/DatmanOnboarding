@@ -183,9 +183,11 @@ export default function DocumentsUpload() {
                 borderRadius="$full"
                 borderColor="$black"
                 flex={1}
-                onPress={() => {
+                onPress={async() => {
                   setShowModal(false);
                   navigation.navigate('Review');
+
+                  
                 }}
               >
                 <ButtonText color="$black">Review</ButtonText>
@@ -237,6 +239,8 @@ export default function DocumentsUpload() {
               onPress={() => {
                 navigation.navigate('Details');
                 setModal(false);
+                // await handleNoDocumentClick();
+
               }}
             >
               <ButtonText color="$white">Continue</ButtonText>

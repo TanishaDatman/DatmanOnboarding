@@ -74,7 +74,7 @@ const Contact = () => {
 
     // Dispatch to Redux
     dispatch(setContactDetails(contactDetails));
-    console.log('Submitted Contact Details:', contactDetails);
+    // console.log('Submitted Contact Details:', contactDetails);
 
     // Navigate to Address screen
     navigation.navigate('Address');

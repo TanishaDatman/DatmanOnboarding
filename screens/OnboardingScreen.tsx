@@ -14,6 +14,7 @@ import {
 } from '@gluestack-ui/themed';
 import { customConfig } from '../theme';
 import { useNavigation } from '@react-navigation/native';
+import { Pressable } from '@gluestack-ui/themed';
 
 const OnboardingScreen = () => {
 
@@ -22,19 +23,20 @@ const OnboardingScreen = () => {
   return (
     <GluestackUIProvider config={customConfig}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Box bg="$white" flex={1} p="$6">
-          {/* Header */}
-          
-          
-          {/* <Box h="$px" bg="$borderLight200" my="$4" /> */}
-          
-          {/* Main Title */}
-          <Text fontSize="$xl" marginTop="$6" fontWeight="$bold" mb="$4">
-            Onboarding
-          </Text>
+        <Box bg="$white" flex={1} pt="$8" p="$6">
+ <HStack alignItems="center" mt="$3">
+               <Pressable onPress={() => navigation.goBack()}>
+                 <Image
+                   source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
+                   style={{ width: 20, height: 20, marginRight: 8 }}
+                   alt="back button"
+                 />
+               </Pressable>
+               <Text fontSize="$lg" fontWeight="$medium">Onboarding</Text>
+             </HStack>
           
           {/* Description */}
-          <Text fontSize="$md" mb="$6">
+          <Text fontSize="$md" mt="$4" mb="$6">
             Onboarding is an essential step to activate your account for accepting payments and receiving payouts.
           </Text>
           

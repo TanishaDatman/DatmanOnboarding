@@ -18,10 +18,14 @@ import {
   Image,
 } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 export default function ReviewBusiness() {
   const navigation:any = useNavigation();
   const [showModal, setShowModal] = useState(false);
+
+  const companyWhat = useSelector((state: any) => state.business.companywhat);
+  
 
   const handleConfirm = () => {
     setShowModal(true);
@@ -54,7 +58,7 @@ export default function ReviewBusiness() {
         <Box bg="$white" borderRadius="$lg" p="$4" mb="$4">
           <HStack justifyContent="space-between" mb="$2">
             <VStack>
-              <Text fontSize="$md" color="$black">John Stark</Text>
+              <Text fontSize="$md" color="$black">{companyWhat}</Text>
               <Text fontSize="$sm" color="$gray500">01/11/1993</Text>
               <Text fontSize="$sm" color="$gray500">British</Text>
             </VStack>

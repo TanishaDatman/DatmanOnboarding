@@ -17,10 +17,19 @@ import {
   Image,
 } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 export default function Review() {
   const navigation:any = useNavigation();
   const [showModal, setShowModal] = useState(false);
+
+
+  const ownerDetails = useSelector((state: any) => state.owner.owner); 
+  const ownerContact = useSelector((state: any) => state.owner.contact); 
+  const ownerAddress = useSelector((state: any) => state.owner.address); 
+
+
+
 
   const handleConfirm = () => {
     setShowModal(true);
@@ -53,12 +62,13 @@ export default function Review() {
         <Box bg="$white" borderRadius="$lg" p="$4" mb="$4">
           <HStack justifyContent="space-between" mb="$2">
             <VStack>
-              <Text fontSize="$md" color="$black">John Stark</Text>
-              <Text fontSize="$sm" color="$gray500">01/11/1993</Text>
-              <Text fontSize="$sm" color="$gray500">British</Text>
+              <Text fontSize="$md" color="$black">{ownerDetails?.title} {ownerDetails?.firstName} {ownerDetails?.lastName}
+              </Text>
+              <Text fontSize="$sm" color="$gray500">{ownerDetails?.dob}</Text>
+              <Text fontSize="$sm" color="$gray500">{ownerDetails?.nationality}</Text>
             </VStack>
             <Pressable onPress={() => navigation.navigate('EditOwner')}>
-              <Text color="$green600" fontWeight="$semibold">Edit</Text>
+              {/* <Text color="$green600" fontWeight="$semibold">Edit</Text> */}
             </Pressable>
           </HStack>
         </Box>
@@ -68,11 +78,11 @@ export default function Review() {
         <Box bg="$white" borderRadius="$lg" p="$4" mb="$4">
           <HStack justifyContent="space-between" mb="$2">
             <VStack>
-              <Text fontSize="$sm" color="$gray700">starkjohn@gmail.com</Text>
-              <Text fontSize="$sm" color="$gray700">+44 8829012003</Text>
+              <Text fontSize="$sm" color="$gray700">{ownerContact?.email}</Text>
+              <Text fontSize="$sm" color="$gray700">{ownerContact?.phone}</Text>
             </VStack>
             <Pressable onPress={() => navigation.navigate('EditContact')}>
-              <Text color="$green600" fontWeight="$semibold">Edit</Text>
+              {/* <Text color="$green600" fontWeight="$semibold">Edit</Text> */}
             </Pressable>
           </HStack>
         </Box>
@@ -82,10 +92,10 @@ export default function Review() {
         <Box bg="$white" borderRadius="$lg" borderColor="$blue500" borderWidth={1} p="$4" mb="$6">
           <HStack justifyContent="space-between" alignItems="flex-start">
             <Text fontSize="$sm" color="$gray700" flexShrink={1}>
-              57 Winston road, Vale of Glamorgan, Barry, CF6 9ST, United Kingdom
+            {ownerAddress.houseNo} {ownerAddress.street} {ownerAddress.postCode} {ownerAddress.town} {ownerAddress.county} {ownerAddress.country}
             </Text>
             <Pressable onPress={() => navigation.navigate('EditAddress')}>
-              <Text color="$green600" fontWeight="$semibold">Edit</Text>
+              {/* <Text color="$green600" fontWeight="$semibold">Edit</Text> */}
             </Pressable>
           </HStack>
         </Box>
@@ -126,3 +136,8 @@ export default function Review() {
     </Box>
   );
 }
+
+
+
+
+

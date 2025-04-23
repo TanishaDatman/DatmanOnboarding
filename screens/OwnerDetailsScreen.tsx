@@ -7,7 +7,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { setOwnerDetails } from '../store/actions/ownerActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Pressable } from '@gluestack-ui/themed';
 import { useForm, Controller } from 'react-hook-form';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -71,10 +71,10 @@ const formatDateToDisplay = (date: Date) => {
   };
 
   
+  // const ownerDetails = useSelector((state: any) => state.owner.ownerDetails);
 
   const onSubmit = (data: any) => {
     dispatch(setOwnerDetails(data));
-    console.log("Submitted Owner Details:", data);
     navigation.navigate("Contact");
   };
 
@@ -186,33 +186,6 @@ const formatDateToDisplay = (date: Date) => {
             />
             {errors.lastName && <Text color="$red500" fontSize="$xs">{errors.lastName.message}</Text>}
           </Box>
-
-          {/* <Box>
-  <Text fontSize="$sm" mb="$1">Date of Birth</Text>
-  <Controller
-    control={control}
-    name="dob"
-    rules={{
-      required: 'Date of birth is required',
-      validate: value => isValidDate(value) || 'Invalid date format (DD/MM/YYYY)'
-    }}
-    render={({ field: { onChange, value } }) => (
-      <Input variant="underlined">
-        <InputField
-          value={value}
-          onChangeText={(text) => {
-            const formatted = formatDateWithSlashes(text);
-            onChange(formatted);
-          }}
-          placeholder="DD/MM/YYYY"
-          keyboardType="numeric"
-          maxLength={10} // DD/MM/YYYY is 10 characters
-        />
-      </Input>
-    )}
-  />
-  {errors.dob && <Text color="$red500" fontSize="$xs">{errors.dob.message}</Text>}
-</Box> */}
 
 
 <Box>

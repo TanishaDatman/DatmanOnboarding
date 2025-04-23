@@ -333,7 +333,7 @@ export interface OwnerDetails {
   nationality: string;
 }
 
-const BASE_URL = 'https://9f31-103-6-156-87.ngrok-free.app';
+const BASE_URL = 'https://be6e-203-92-57-230.ngrok-free.app';
 
 export const useOwnerApi = () => {
   const [loading, setLoading] = useState(false);
@@ -383,8 +383,10 @@ export const useOwnerApi = () => {
   const getOwnerDetails = async (id:any) => {
     try {
       setLoading(true);
-      const response = await fetch(`${BASE_URL}api/business-detail/${id}`, { method: 'GET' });
+      const response = await fetch(`${BASE_URL}/api/business-detail/${id}`, { method: 'GET' });
       const data = await response.json();
+      console.log("data in review is",data);
+      
       if (!response.ok) throw new Error(data.message || 'Failed to fetch details');
 
       return data;

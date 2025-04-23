@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native';
 import { Box, Text, VStack, HStack, Pressable, Button, ScrollView } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
-import {useOwnerApi} from '../hooks/useOwnerApi'
+import { useOwnerApi } from '../hooks/useOwnerApi';
 
 const onboardingData = [
   {
@@ -10,51 +10,90 @@ const onboardingData = [
     title: 'Owner details',
     description: 'Includes name, address, contact, and identity proof.',
     route: 'OwnerDetails',
+    key: 'owner', 
   },
   {
     icon: require('../assets/images/cases.png'),
     title: 'Business details',
     description: 'Includes business type, contact, address, proof of business, etc.',
     route: 'BusinessDetails',
+    key: 'business',
   },
   {
     icon: require('../assets/images/store.png'),
     title: 'Trading information',
     description: 'Includes trading name, address, and related details.',
     route: 'TradingInfo',
+    key: 'trading',
   },
   {
     icon: require('../assets/images/account_balance.png'),
     title: 'Bank details',
     description: 'Includes account number, bank name, and related information.',
     route: 'BankDetails',
+    key: 'bank',
   },
 ];
 
 export default function DetailsScreen() {
-  const navigation :any= useNavigation();
+  const navigation: any = useNavigation();
+  const { getOwnerDetails } = useOwnerApi();
+
+  const [ownerStatus, setOwnerStatus] = useState<'pending' | 'inProgress'>('pending');
+
+  const ownerId = 21;
+
+  useEffect(() => {
+    const fetchOwner = async () => {
+      try {
+        const data = await getOwnerDetails(ownerId);
+        if (data && Object.keys(data).length > 0) {
+          setOwnerStatus('inProgress');
+        }
+      } catch (error) {
+        console.error('Error fetching owner details:', error);
+      }
+    };
+
+    fetchOwner();
+  }, []);
+
+  const getStatusLabel = (stepKey: string) => {
+    if (stepKey === 'owner') {
+      return ownerStatus === 'inProgress' ? 'Verification in progress' : 'Pending';
+    }
+    return 'Pending';
+  };
+
+  const getStatusColor = (stepKey: string) => {
+    if (stepKey === 'owner' && ownerStatus === 'inProgress') {
+      return '$green';
+    }
+    return '$amber600';
+  };
+
+  const getStatusBg = (stepKey: string) => {
+    if (stepKey === 'owner' && ownerStatus === 'inProgress') {
+      return '$green100';
+    }
+    return '$amber100';
+  };
 
   return (
     <Box flex={1} bg="$white" pt="$8" px="$4">
       <ScrollView>
-       
 
-        {/* arrow and stuff */}
+        {/* Back button and title */}
         <HStack alignItems="center" mt="$3" mb="$6">
-  <Pressable onPress={() => navigation.goBack()}>
-    <Image
-      source={require('../assets/images/arrow_forward.png')} // Make sure this image exists
-      style={{ width: 20, height: 20, marginRight: 8 }}
-      
-    />
-  </Pressable>
-  <Text fontSize="$lg" fontWeight="$medium">Onboarding</Text>
-</HStack>
-        {/* arrow and stuff */}
+          <Pressable onPress={() => navigation.goBack()}>
+            <Image
+              source={require('../assets/images/arrow_forward.png')}
+              style={{ width: 20, height: 20, marginRight: 8 }}
+            />
+          </Pressable>
+          <Text fontSize="$lg" fontWeight="$medium">Onboarding</Text>
+        </HStack>
 
-
-
-        {/* Title */}
         <Text fontSize="$xl" fontWeight="$bold" mb="$2">
           Complete Onboarding
         </Text>
@@ -86,13 +125,15 @@ export default function DetailsScreen() {
                     </Text>
                     <Box
                       alignSelf="flex-start"
-                      bg="$amber100"
+                      bg={getStatusBg(item.key)}
                       px="$3"
                       py="$1"
                       borderRadius="$full"
                       mt="$2"
                     >
-                      <Text fontSize="$xs" color="$amber600">Pending</Text>
+                      <Text fontSize="$xs" color={getStatusColor(item.key)}>
+                        {getStatusLabel(item.key)}
+                      </Text>
                     </Box>
                   </VStack>
                 </HStack>
@@ -114,12 +155,12 @@ export default function DetailsScreen() {
           <Text fontSize="$md" fontWeight="$medium">Later</Text>
         </Button>
         <Button
-         variant="outline"
-         borderColor="$black"
-         bgColor='$black'
-         flex={1}
-         borderRadius="$full"
-        onPress={() => console.log('Next')}
+          variant="outline"
+          borderColor="$black"
+          bgColor="$black"
+          flex={1}
+          borderRadius="$full"
+          onPress={() => console.log('Next')}
         >
           <Text fontSize="$md" color="$white" fontWeight="$medium">Next</Text>
         </Button>

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { VStack, Text, Pressable, Box, HStack, Icon } from '@gluestack-ui/themed';
+import { VStack, Text, Pressable, Box, HStack, Icon, ScrollView } from '@gluestack-ui/themed';
 import { CheckCircle, Home, Store, Users, Grid } from 'lucide-react-native';
 import { Button } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from '@gluestack-ui/themed';
+import { useDispatch } from 'react-redux';
+import { setwhatbusiness } from '../store/actions/bussinessActions';
 
 const businessOptions = [
   {
@@ -32,13 +34,24 @@ const businessOptions = [
   },
 ];
 
+
+
+
 const BusinessDetailsScreen = () => {
   const [selected, setSelected] = useState<string>('limited_llp');
   const navigation:any=useNavigation()
+  const dispatch = useDispatch();
+
+  const onSubmit = (data: any) => {
+    dispatch(setwhatbusiness({
+      id: selected,
+    }));      navigation.navigate("Organization");
+    };
 
   return (
     
     <VStack flex={1} px="$4" py="$6" bg="$backgroundLight0" space="lg">
+      <ScrollView>
         <HStack alignItems="center" mt="$3" mb="$3">
                 <Pressable onPress={() => navigation.goBack()}>
                   <Image
@@ -98,11 +111,14 @@ const BusinessDetailsScreen = () => {
                   flex={1}
                   bg="$black"
                   borderRadius="$full"
-                  onPress={() => navigation.navigate("Organization")}
+                  // onPress={() => navigation.navigate("Organization")}
+                  onPress={onSubmit}
+
                 >
                   <Text fontWeight="$medium" color="$white">Next</Text>
                 </Button>
               </HStack>
+              </ScrollView>
     </VStack>
 
   );
