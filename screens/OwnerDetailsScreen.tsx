@@ -184,7 +184,7 @@ const formatDateToDisplay = (date: Date) => {
           </Box>
 
 
-<Box>
+          <Box>
   <Text fontSize="$sm" mb="$1">Date of Birth</Text>
   <Controller
     control={control}
@@ -192,69 +192,56 @@ const formatDateToDisplay = (date: Date) => {
     rules={{ required: 'Date of birth is required' }}
     render={({ field: { onChange, value } }) => (
       <>
-        <Pressable onPress={() => setShowDatePicker(true)}>
-          <Input variant="underlined" isReadOnly>
-            <InputField
-              value={value}
-              placeholder="Date of Birth"
-              editable={false}
-              pointerEvents="none"
+        {Platform.OS === 'web' ? (
+          <div style={{ width: '100%' }}>
+            <DatePicker
+              selected={value ? new Date(value.split('/').reverse().join('-')) : null}
+              onChange={(date: Date | null) => {
+                if (date) {
+                  const formatted = formatDateToDisplay(date);
+                  onChange(formatted);
+                } else {
+                  onChange(''); // Handle case when date is cleared
+                }
+              }}
+              dateFormat="dd/MM/yyyy"
+              placeholderText="Date of Birth"
+              showYearDropdown
+              dropdownMode="select"
+              maxDate={new Date()}
+              className="date-picker-input"
+              wrapperClassName="date-picker-wrapper"
             />
-          </Input>
-        </Pressable>
-
-        {/* {showDatePicker && (
-          <DateTimePicker
-            mode="date"
-            display={Platform.OS === 'ios' ? 'inline' : 'default'}
-            maximumDate={new Date()}
-            value={value ? new Date(value.split('/').reverse().join('-')) : new Date()}
-            onChange={(event, selectedDate) => {
-              setShowDatePicker(false);
-              if (selectedDate) {
-                const formatted = formatDateToDisplay(selectedDate);
-                onChange(formatted);
-              }
-            }}
-          />
-        )} */}
-
-
-{Platform.OS === 'web' ? (
- <div style={{ width: '100%' }}>
- <DatePicker
-   selected={value ? new Date(value.split('/').reverse().join('-')) : null}
-   onChange={(date: Date | null) => {
-     if (date) {
-       const formatted = date.toLocaleDateString('en-GB'); // dd/MM/yyyy
-       onChange(formatted);
-     }
-   }}
-   dateFormat="dd/MM/yyyy"
-   placeholderText="Date of Birth"
-   showYearDropdown
-   dropdownMode="select"
-   maxDate={new Date()}
-   className="date-picker-input" // Add this class
- />
-</div>
-) : (
-  showDatePicker && (
-    <DateTimePicker
-      mode="date"
-      display={Platform.OS === 'ios' ? 'inline' : 'default'}
-      maximumDate={new Date()}
-      value={value ? new Date(value.split('/').reverse().join('-')) : new Date()}
-      onChange={(event, selectedDate) => {
-        setShowDatePicker(false);
-        if (selectedDate) {
-          const formatted = formatDateToDisplay(selectedDate);
-          onChange(formatted);
-        }
-      }}
-    />
-  )
-)}
+          </div>
+        ) : (
+          <>
+            <Pressable onPress={() => setShowDatePicker(true)}>
+              <Input variant="underlined" isReadOnly>
+                <InputField
+                  value={value}
+                  placeholder="Date of Birth"
+                  editable={false}
+                  pointerEvents="none"
+                />
+              </Input>
+            </Pressable>
+            {showDatePicker && (
+              <DateTimePicker
+                mode="date"
+                display={Platform.OS === 'ios' ? 'inline' : 'default'}
+                maximumDate={new Date()}
+                value={value ? new Date(value.split('/').reverse().join('-')) : new Date()}
+                onChange={(event, selectedDate) => {
+                  setShowDatePicker(false);
+                  if (selectedDate) {
+                    const formatted = formatDateToDisplay(selectedDate);
+                    onChange(formatted);
+                  }
+                }}
+              />
+            )}
+          </>
+        )}
       </>
     )}
   />
