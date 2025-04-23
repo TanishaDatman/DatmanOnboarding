@@ -36,23 +36,24 @@ const OnboardingScreen = () => {
              </HStack>
           
           {/* Description */}
-          <Text fontSize="$md" mt="$4" mb="$6">
+          <Text $xs-fontSize="$xs"  $sm-fontSize="$sm" $md-fontSize="$md"  $lg-fontSize="$lg" mt="$4" mb="$6">
             Onboarding is an essential step to activate your account for accepting payments and receiving payouts.
           </Text>
           
-          <Image
+         
+<Image
   source={require('../assets/images/frame.png')}
   alt="Descriptive text"
-//   width='100%'
-  resizeMode="cover" 
+  resizeMode="cover"
   marginBottom="$3"
-  style={{ width: '100%', flex: 1,borderRadius:16}} // string is fine inside style
-  height={150}
-//   borderRadius="$md"
+  style={{
+    width: '100%',
+    // height: '100%', 
+    height: 150, 
+    borderRadius: 16,
+  }}
 />
 
-
-          {/* Section Title */}
           <Text fontSize="$xl" fontWeight="$bold" mb="$4">
             What details are required?
           </Text>
@@ -90,7 +91,7 @@ const OnboardingScreen = () => {
               borderRadius="$full"
               onPress={() => navigation.goBack()}
             >
-              <ButtonText color="$textDark700">I'll do this later</ButtonText>
+              <ButtonText fontSize="$sm" color="$textDark700">I'll do this later</ButtonText>
             </Button>
             
             <Button
@@ -99,7 +100,7 @@ const OnboardingScreen = () => {
               borderRadius="$full"
               onPress={() => navigation.navigate("Details")}
             >
-              <ButtonText color="$white">Continue</ButtonText>
+              <ButtonText fontSize="$sm" color="$white">Continue</ButtonText>
             </Button>
           </HStack>
         </Box>

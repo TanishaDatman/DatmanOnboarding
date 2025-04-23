@@ -41,17 +41,19 @@ export default function DetailsScreen() {
 
   const [ownerStatus, setOwnerStatus] = useState<'pending' | 'inProgress'>('pending');
 
-  const ownerId = 21;
+  const ownerId = 23;
 
   useEffect(() => {
     const fetchOwner = async () => {
       try {
         const data = await getOwnerDetails(ownerId);
-        if (data && Object.keys(data).length > 0) {
+        console.log('Fetched owner data:', data); 
+
+        if (data?.ok && data?.status===200) {
           setOwnerStatus('inProgress');
         }
       } catch (error) {
-        console.error('Error fetching owner details:', error);
+        // console.error('Error fetching owner details:', error);
       }
     };
 

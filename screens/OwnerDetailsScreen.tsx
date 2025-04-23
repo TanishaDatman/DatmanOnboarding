@@ -12,6 +12,10 @@ import { Pressable } from '@gluestack-ui/themed';
 import { useForm, Controller } from 'react-hook-form';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Platform } from 'react-native';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+
 
 
 export default function OwnerDetailsScreen() {
@@ -28,6 +32,8 @@ export default function OwnerDetailsScreen() {
     }
   });
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  
 
 const formatDateToDisplay = (date: Date) => {
   const day = String(date.getDate()).padStart(2, '0');
@@ -56,20 +62,9 @@ const formatDateToDisplay = (date: Date) => {
     );
   };
 
-  const formatDateWithSlashes = (input: string): string => {
-    // Remove all non-digit characters
-    const digits = input.replace(/\D/g, '');
-    
-    // Add slashes automatically based on input length
-    if (digits.length <= 2) {
-      return digits;
-    }
-    if (digits.length <= 4) {
-      return `${digits.slice(0, 2)}/${digits.slice(2)}`;
-    }
-    return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4, 8)}`;
-  };
+  
 
+  
   
   // const ownerDetails = useSelector((state: any) => state.owner.ownerDetails);
 
@@ -77,6 +72,7 @@ const formatDateToDisplay = (date: Date) => {
     dispatch(setOwnerDetails(data));
     navigation.navigate("Contact");
   };
+
 
   return (
     <Box flex={1} bg="$white" px="$4" pt="$6">
@@ -207,7 +203,7 @@ const formatDateToDisplay = (date: Date) => {
           </Input>
         </Pressable>
 
-        {showDatePicker && (
+        {/* {showDatePicker && (
           <DateTimePicker
             mode="date"
             display={Platform.OS === 'ios' ? 'inline' : 'default'}
@@ -221,7 +217,44 @@ const formatDateToDisplay = (date: Date) => {
               }
             }}
           />
-        )}
+        )} */}
+
+
+{Platform.OS === 'web' ? (
+ <div style={{ width: '100%' }}>
+ <DatePicker
+   selected={value ? new Date(value.split('/').reverse().join('-')) : null}
+   onChange={(date: Date | null) => {
+     if (date) {
+       const formatted = date.toLocaleDateString('en-GB'); // dd/MM/yyyy
+       onChange(formatted);
+     }
+   }}
+   dateFormat="dd/MM/yyyy"
+   placeholderText="Date of Birth"
+   showYearDropdown
+   dropdownMode="select"
+   maxDate={new Date()}
+   className="date-picker-input" // Add this class
+ />
+</div>
+) : (
+  showDatePicker && (
+    <DateTimePicker
+      mode="date"
+      display={Platform.OS === 'ios' ? 'inline' : 'default'}
+      maximumDate={new Date()}
+      value={value ? new Date(value.split('/').reverse().join('-')) : new Date()}
+      onChange={(event, selectedDate) => {
+        setShowDatePicker(false);
+        if (selectedDate) {
+          const formatted = formatDateToDisplay(selectedDate);
+          onChange(formatted);
+        }
+      }}
+    />
+  )
+)}
       </>
     )}
   />

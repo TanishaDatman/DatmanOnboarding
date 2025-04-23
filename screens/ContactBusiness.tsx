@@ -194,7 +194,7 @@ const ContactBusiness = () => {
 
   // Handle form submission
   const onSubmit = (data: any) => {
-    console.log('Submitted Business Contact Details:', data);
+    // console.log('Submitted Business Contact Details:', data);
     navigation.navigate('AddressBusiness');
   };
 

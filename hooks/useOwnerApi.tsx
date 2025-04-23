@@ -333,7 +333,8 @@ export interface OwnerDetails {
   nationality: string;
 }
 
-const BASE_URL = 'https://be6e-203-92-57-230.ngrok-free.app';
+
+const BASE_URL = 'https://fe67-49-249-92-34.ngrok-free.app';
 
 export const useOwnerApi = () => {
   const [loading, setLoading] = useState(false);
@@ -341,7 +342,7 @@ export const useOwnerApi = () => {
   const postOwnerDetails = async (details: any) => {
     try {
       setLoading(true);
-      console.log("details---->",details)
+      // console.log("details---->",details)
       const formData = new FormData();
       formData.append('title', details.title);
       formData.append('first_name', details.firstName);
@@ -367,7 +368,7 @@ export const useOwnerApi = () => {
   
       // Here, directly parse the JSON response
       const data = await response.json();  // No need for JSON.parse(text) again
-      console.log('Raw response------>:', data);
+      // console.log('Raw response------>:', data);
   
       if (!response.ok) throw new Error(data.message || 'Failed to submit details');
   
@@ -384,10 +385,10 @@ export const useOwnerApi = () => {
     try {
       setLoading(true);
       const response = await fetch(`${BASE_URL}/api/business-detail/${id}`, { method: 'GET' });
-      const data = await response.json();
-      console.log("data in review is",data);
+      const data = await response;
+      // console.log("data in review is",data);
       
-      if (!response.ok) throw new Error(data.message || 'Failed to fetch details');
+      if (!response.ok) throw new Error('Failed to fetch details');
 
       return data;
     } catch (error) {

@@ -165,7 +165,7 @@ const CompanyDetails = () => {
 
   // Handle form submission
   const onSubmit = (data: any) => {
-    console.log('Submitted Company Details:', data);
+    // console.log('Submitted Company Details:', data);
     navigation.navigate('ContactBusiness');
   };
 

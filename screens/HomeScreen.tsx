@@ -74,10 +74,10 @@ export default function HomeScreen() {
 
       <VStack space="md">
         <Box p="$2" borderRadius="$md">
-          <Text fontSize="$xl" letterSpacing="$lg" fontWeight="$700" color="$black">
+          <Text $md-fontSize="$md"  $lg-fontSize="$lg"  letterSpacing="$lg" fontWeight="$700" color="$black">
             Hey John, 👋
           </Text>
-          <Text fontSize="$lg" letterSpacing="$xl" marginTop="$1" color="$grey">
+          <Text $xs-fontSize="$xs"  $sm-fontSize="$sm" $md-fontSize="$md"  $lg-fontSize="$lg" letterSpacing="$xl" marginTop="$1" color="$grey">
             Here's the latest update on your store.
           </Text>
         </Box>
@@ -90,8 +90,7 @@ export default function HomeScreen() {
     overflow="hidden" 
     width="100%" 
     height={200}
-    // marginLeft={} // Negative margin to compensate for parent padding
-    marginRight={-16} // Negative margin to compensate for parent padding
+    marginRight={-16}
   >
     <ImageBackground
       source={require('../assets/images/card.png')}
@@ -124,16 +123,34 @@ export default function HomeScreen() {
         </VStack>
 
         <VStack space="sm">
-          <HStack alignItems="center" flexWrap="wrap">
-            <Icon as={AlertCircleIcon} color="$amber600" mr="$1" />
+         
 
-            <Text fontSize="$xs" color="$black" underline>
-              Complete the onboarding verification to withdraw money.
-             
-            </Text>
-
-            
-          </HStack>
+<HStack 
+  alignItems="center" 
+  space="xs"
+  flexWrap="nowrap"
+>
+  <Icon 
+    as={AlertCircleIcon} 
+    color="$amber600" 
+    size="xs" 
+  />
+  
+  <Text 
+    fontSize="$2xs" 
+    color="$black" 
+    underline
+    numberOfLines={1}
+    ellipsizeMode="tail"
+    flexShrink={1}
+    $xs={{ fontSize: "$2xs" }} 
+    $sm={{ fontSize: "$xs" }} 
+    $md={{ fontSize: "$sm" }} 
+    $lg={{ fontSize: "$md" }} 
+  >
+    Complete the onboarding verification to withdraw money.
+  </Text>
+</HStack>
 
           <VStack space="xs">
             <HStack justifyContent="space-between" alignItems="center">

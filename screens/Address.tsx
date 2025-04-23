@@ -76,7 +76,7 @@ export default function Address() {
 
     // Dispatch the action to save the address in Redux
     dispatch(setAddressDetails(addressDetails));
-    console.log('Submitted Address Details:', addressDetails);
+    // console.log('Submitted Address Details:', addressDetails);
 
     // Navigate to the next screen
     navigation.navigate('Documents');

@@ -60,13 +60,13 @@ export default function DocumentsUpload() {
   const isNextEnabled = passport || license;
 
    const owner = useSelector((state: any) => state.owner.owner);
-    console.log('Owner details from redux:', owner);
+    // console.log('Owner details from redux:', owner);
     const contact = useSelector((state: any) => state.owner.contact);
-    console.log('conatct details from redux:', contact);
+    // console.log('conatct details from redux:', contact);
     const address = useSelector((state: any) => state.owner.address);
-    console.log('address details from redux:', address);
+    // console.log('address details from redux:', address);
     const image = useSelector((state: any) => state.owner.image);
-    console.log('Image details from redux:', image);
+    // console.log('Image details from redux:', image);
 
   const handleNoDocumentClick = async () => {
     const details = {
@@ -78,7 +78,7 @@ export default function DocumentsUpload() {
 
     try {
       await postOwnerDetails(details);
-      console.log('Business detail submitted without document',details);
+      // console.log('Business detail submitted without document',details);
     } catch (err) {
       console.error(err);
     }
@@ -190,7 +190,7 @@ export default function DocumentsUpload() {
                   
                 }}
               >
-                <ButtonText color="$black">Review</ButtonText>
+                <ButtonText fontSize="$sm" color="$black">Review</ButtonText>
               </Button>
 
               <Button
@@ -203,7 +203,7 @@ export default function DocumentsUpload() {
                   await handleNoDocumentClick();
                 }}
               >
-                <ButtonText color="$white">No, I’m good</ButtonText>
+                <ButtonText fontSize="$sm" color="$white">No, I’m good</ButtonText>
               </Button>
             </HStack>
           </ModalFooter>
@@ -243,7 +243,7 @@ export default function DocumentsUpload() {
 
               }}
             >
-              <ButtonText color="$white">Continue</ButtonText>
+              <ButtonText  color="$white">Continue</ButtonText>
             </Button>
           </ModalFooter>
         </ModalContent>
