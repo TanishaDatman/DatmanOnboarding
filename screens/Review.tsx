@@ -18,10 +18,13 @@ import {
 } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import { useOwnerApi } from '../hooks/useOwnerApi';
+
 
 export default function Review() {
   const navigation:any = useNavigation();
   const [showModal, setShowModal] = useState(false);
+  const { postOwnerDetails } = useOwnerApi();
 
 
   const ownerDetails = useSelector((state: any) => state.owner.owner); 
@@ -31,9 +34,22 @@ export default function Review() {
 
 
 
-  const handleConfirm = () => {
-    setShowModal(true);
+  const handleConfirm = async () => {
+    try {
+      const combinedDetails = {
+        ...ownerDetails,
+        ...ownerContact,
+        ...ownerAddress,
+      };
+      
+      await postOwnerDetails(combinedDetails);
+      setShowModal(true); // Show success modal
+    } catch (error) {
+      console.error("Failed to post owner details:", error);
+      // Optionally show an error alert here
+    }
   };
+  
 
   const handleContinue = () => {
     setShowModal(false);

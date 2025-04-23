@@ -15,6 +15,9 @@ import {
 import { HStack } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from '@gluestack-ui/themed';
+import {setBusinessType} from "../store/actions/bussinessActions"
+import { useDispatch } from 'react-redux';
+
 
 const organisationOptions = [
   { value: 'association', label: 'Association Incorporated' },
@@ -27,6 +30,12 @@ const organisationOptions = [
 const OrganisationType = () => {
   const [selectedValue, setSelectedValue] = useState('private');
   const navigation:any=useNavigation()
+  const dispatch = useDispatch();
+
+  const onSubmit = (data: any) => {
+    dispatch(setBusinessType(data));
+      navigation.navigate("Company");
+    };
 
   return (
     <Box flex={1} px="$4" py="$6" bg="$backgroundLight0">
@@ -39,7 +48,7 @@ const OrganisationType = () => {
                    alt="back button"
                  />
                </Pressable>
-               <Text fontSize="$lg" fontWeight="$medium">Owner Details</Text>
+               <Text fontSize="$lg" fontWeight="$medium">Business Details</Text>
              </HStack>
         <Text fontSize="$xl" marginTop="$2" fontWeight="$bold">
           Choose your organisation type
@@ -88,7 +97,9 @@ const OrganisationType = () => {
                         flex={1}
                         bg="$black"
                         borderRadius="$full"
-                        onPress={() => navigation.navigate("Company")}
+                        // onPress={() => navigation.navigate("Company")}
+                        onPress={onSubmit}
+
                       >
                         <Text fontWeight="$medium" color="$white">Next</Text>
                       </Button>

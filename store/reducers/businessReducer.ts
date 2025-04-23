@@ -1,4 +1,5 @@
 const initialState = {
+
           companywhat: "",
           businessType: "",
   

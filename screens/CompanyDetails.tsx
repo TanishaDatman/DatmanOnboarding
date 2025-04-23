@@ -16,6 +16,8 @@ import { Image } from '@gluestack-ui/themed';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useDispatch } from 'react-redux';
+import { setCompanyDetails } from '../store/actions/bussinessActions';
 
 // Define Zod schema for validation
 const companySchema = z.object({
@@ -47,11 +49,22 @@ const CompanyDetails = () => {
     mode: 'onTouched',
   });
 
+  const dispatch=useDispatch()
+
   // Handle form submission
+  // const onSubmit = (data: any) => {
+  //   navigation.navigate('ContactBusiness');
+  // };
   const onSubmit = (data: any) => {
-    // console.log('Submitted Company Details:', data);
+    dispatch(setCompanyDetails({
+      businessType: '', 
+      companyNumber: data.companyNumber,
+      legalName: data.legalName,
+    }));
+  
     navigation.navigate('ContactBusiness');
   };
+  
 
   // Enable Next button when the form is valid
   const isNextEnabled = isValid && !!errors.companyNumber && !!errors.legalName;

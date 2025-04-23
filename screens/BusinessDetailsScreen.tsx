@@ -44,9 +44,8 @@ const BusinessDetailsScreen = () => {
   const dispatch = useDispatch();
 
   const onSubmit = (data: any) => {
-    dispatch(setwhatbusiness({
-      id: selected,
-    }));      navigation.navigate("Organization");
+    dispatch(setwhatbusiness(selected));
+      navigation.navigate("Organization");
     };
 
   return (

@@ -125,12 +125,6 @@ function HomeStack() {
   <Stack.Screen name="HomeOnboard" component={HomeOnboard} />
   <Stack.Screen name="AddressBusiness" component={AddressBusiness} />
 
-
-
-
-
-
-
     </Stack.Navigator>
   );
 }
