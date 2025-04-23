@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Platform } from 'react-native';
 
 export interface OwnerDetails {
   title: string;
@@ -9,7 +10,11 @@ export interface OwnerDetails {
 }
 
 
-const BASE_URL = 'https://fe67-49-249-92-34.ngrok-free.app';
+// const BASE_URL = 'https://fe67-49-249-92-34.ngrok-free.app';
+const BASE_URL =
+  Platform.OS === 'web'
+    ? 'http://localhost:3000'
+    : 'https://fe67-49-249-92-34.ngrok-free.app';
 
 export const useOwnerApi = () => {
   const [loading, setLoading] = useState(false);
