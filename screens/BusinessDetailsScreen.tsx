@@ -10,27 +10,28 @@ import { setwhatbusiness } from '../store/actions/bussinessActions';
 const businessOptions = [
   {
     id: 'sole_trader',
+    icon: require('../assets/images/location_away.png'),
     label: 'Sole Trader',
     description: 'A self-employed individual running a business.',
-    icon: <Home size={20} />,
   },
   {
     id: 'limited_llp',
+    icon: require('../assets/images/storefront.png'),
+
     label: 'Limited/LLP',
     description: 'A registered company with limited liability protection.',
-    icon: <Store size={20} />,
   },
   {
     id: 'partnership',
     label: 'Partnership',
     description: 'A business owned and operated by two or more individuals.',
-    icon: <Users size={20} />,
+    icon: require('../assets/images/handshake.png'),
   },
   {
     id: 'others',
     label: 'Others',
     description: 'Any business type that doesn’t fall into the above categories.',
-    icon: <Grid size={20} />,
+    icon: require('../assets/images/domain.png'),
   },
 ];
 
@@ -68,34 +69,50 @@ const BusinessDetailsScreen = () => {
       </Text>
 
       <VStack space="md" mt="$4">
-        {businessOptions.map((option) => (
-          <Pressable
-            key={option.id}
-            onPress={() => setSelected(option.id)}
-          >
-            <Box
-              borderWidth={1}
-              borderColor={selected === option.id ? '$green' : '$borderLight200'}
-              bg="$white"
-              rounded="$lg"
-              p="$4"
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <HStack space="md" alignItems="center">
-                {option.icon}
-                <VStack>
-                  <Text fontWeight="$medium">{option.label}</Text>
-                  <Text fontSize="$sm" color="$textLight500">{option.description}</Text>
-                </VStack>
-              </HStack>
-              {selected === option.id && (
-                <Icon as={CheckCircle} color="$green" size="md" />
-              )}
-            </Box>
-          </Pressable>
-        ))}
+      {businessOptions.map((option) => (
+  <Pressable
+    key={option.id}
+    onPress={() => setSelected(option.id)}
+  >
+    <Box
+      borderWidth={1}
+      borderColor={selected === option.id ? '$green' : '$borderLight200'}
+      bg="$white"
+      rounded="$lg"
+      p="$4"
+      flexDirection="row"
+      justifyContent="space-between"
+      alignItems="center"
+    >
+      <HStack space="md" alignItems="center" flexShrink={1}>
+        <Image
+          source={option.icon}
+          style={{
+            width: 32, // Adjust icon size here
+            height: 32,
+            resizeMode: 'contain',
+          }}
+          alt={`${option.label} icon`}
+        />
+        <VStack flexShrink={1}>
+          <Text fontWeight="$medium">{option.label}</Text>
+          <Text fontSize="$sm" color="$textLight500" flexShrink={1}>
+            {option.description}
+          </Text>
+        </VStack>
+      </HStack>
+      {selected === option.id && (
+        <Icon
+          as={CheckCircle}
+          color="$green"
+          size="md" // size="sm" was a bit too small / misaligned
+          style={{ marginLeft: 8 }}
+        />
+      )}
+    </Box>
+  </Pressable>
+))}
+
       </VStack>
       <HStack space="md" mt="$8" justifyContent="space-between">
                 <Button
