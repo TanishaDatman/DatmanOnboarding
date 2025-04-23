@@ -25,7 +25,9 @@ export default function ReviewBusiness() {
   const [showModal, setShowModal] = useState(false);
 
   const companyWhat = useSelector((state: any) => state.business.companywhat);
-  
+  const company = useSelector((state: any) => state.business.company);
+const companyNumber = company?.companyNumber;
+const legalName = company?.legalName;
 
   const handleConfirm = () => {
     setShowModal(true);
@@ -33,7 +35,7 @@ export default function ReviewBusiness() {
 
   const handleContinue = () => {
     setShowModal(false);
-    navigation.navigate('Details'); // Replace with actual next screen
+    navigation.navigate('Details');
   };
 
   return (
@@ -54,46 +56,44 @@ export default function ReviewBusiness() {
         </Text>
 
         {/* Section: Owner Details */}
-        <Text fontSize="$sm" fontWeight="$semibold" mb="$2">Owner details</Text>
+        <Text fontSize="$sm" fontWeight="$semibold" mb="$2">Business details</Text>
         <Box bg="$white" borderRadius="$lg" p="$4" mb="$4">
           <HStack justifyContent="space-between" mb="$2">
             <VStack>
-              <Text fontSize="$md" color="$black">{companyWhat}</Text>
-              <Text fontSize="$sm" color="$gray500">01/11/1993</Text>
-              <Text fontSize="$sm" color="$gray500">British</Text>
+              <Text fontSize="$md" color="$black">Company: {companyWhat}</Text>
+              <Text fontSize="$sm" color="$gray500">Company Number: {companyNumber}</Text>
+              <Text fontSize="$sm" color="$gray500">Company Legal Number: {legalName}</Text>
             </VStack>
             <Pressable onPress={() => navigation.navigate('EditOwner')}>
-              <Text color="$green600" fontWeight="$semibold">Edit</Text>
+              {/* <Text color="$green600" fontWeight="$semibold">Edit</Text> */}
             </Pressable>
           </HStack>
         </Box>
 
         {/* Section: Contact Details */}
-        <Text fontSize="$sm" fontWeight="$semibold" mb="$2">Contact details</Text>
-        <Box bg="$white" borderRadius="$lg" p="$4" mb="$4">
+        {/* <Text fontSize="$sm" fontWeight="$semibold" mb="$2">Contact details</Text> */}
+        {/* <Box bg="$white" borderRadius="$lg" p="$4" mb="$4">
           <HStack justifyContent="space-between" mb="$2">
             <VStack>
               <Text fontSize="$sm" color="$gray700">starkjohn@gmail.com</Text>
               <Text fontSize="$sm" color="$gray700">+44 8829012003</Text>
             </VStack>
             <Pressable onPress={() => navigation.navigate('EditContact')}>
-              <Text color="$green600" fontWeight="$semibold">Edit</Text>
             </Pressable>
           </HStack>
-        </Box>
+        </Box> */}
 
         {/* Section: Address */}
-        <Text fontSize="$sm" fontWeight="$semibold" mb="$2">Contact details</Text>
+        {/* <Text fontSize="$sm" fontWeight="$semibold" mb="$2">Contact details</Text>
         <Box bg="$white" borderRadius="$lg" borderColor="$blue500" borderWidth={1} p="$4" mb="$6">
           <HStack justifyContent="space-between" alignItems="flex-start">
             <Text fontSize="$sm" color="$gray700" flexShrink={1}>
               57 Winston road, Vale of Glamorgan, Barry, CF6 9ST, United Kingdom
             </Text>
             <Pressable onPress={() => navigation.navigate('EditAddress')}>
-              <Text color="$green600" fontWeight="$semibold">Edit</Text>
             </Pressable>
           </HStack>
-        </Box>
+        </Box> */}
 
         {/* Confirm Button */}
         <Button bg="$black" borderRadius="$full" size="lg" onPress={handleConfirm}>
