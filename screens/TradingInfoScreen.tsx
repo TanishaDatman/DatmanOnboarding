@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Text,
@@ -25,6 +25,8 @@ import { Center } from '@gluestack-ui/themed';
 import { ModalFooter } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { Pressable } from '@gluestack-ui/themed';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTradingName as setTradingNameAction,setSameAsRegistered, setTradingAddress } from '../store/actions/tradingActions';
 
 const TradingInfoScreen = () => {
   const [isSameAsRegistered, setIsSameAsRegistered] = useState(true);
@@ -38,6 +40,8 @@ const TradingInfoScreen = () => {
   const [modal,setModal]=useState(false);
   const navigation:any=useNavigation()
 
+  
+
   const isNextEnabled = (isSameAsRegistered && tradingName) || (
     tradingName &&
     postCode &&
@@ -46,6 +50,34 @@ const TradingInfoScreen = () => {
     county &&
     country
   );
+  const dispatch = useDispatch();
+
+
+  const handleNext = () => {
+    dispatch(setTradingNameAction(tradingName));
+    dispatch(setSameAsRegistered(isSameAsRegistered));
+  
+    if (!isSameAsRegistered) {
+      dispatch(setTradingAddress({
+        postCode,
+        addressLine1,
+        addressLine2,
+        townCity,
+        county,
+        country,
+      }));
+    }
+  
+    setModal(true);
+  };
+  
+
+  const tradingState = useSelector((state: any) => state.trading);
+
+  useEffect(() => {
+    console.log('Current Redux Trading State:', tradingState);
+  }, [tradingState]);
+  
 
   return (
     <Box flex={1} bg="$backgroundLight0">
