@@ -47,7 +47,7 @@ export default function DetailsScreen() {
     const fetchOwner = async () => {
       try {
         const data = await getOwnerDetails(ownerId);
-        console.log('Fetched owner data:', data); 
+        // console.log('Fetched owner data:', data); 
 
         if (data?.ok && data?.status===200) {
           setOwnerStatus('inProgress');

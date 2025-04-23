@@ -374,7 +374,7 @@ export const useOwnerApi = () => {
   
       return data;
     } catch (error) {
-      console.error('Error submitting details:', error);
+      // console.error('Error submitting details:', error);
       throw error;
     } finally {
       setLoading(false);
