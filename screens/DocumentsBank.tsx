@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useDebugValue, useState } from 'react';
 import {
   Box,
   Text,
@@ -21,12 +21,15 @@ import {
 import * as DocumentPicker from 'expo-document-picker';
 import { useNavigation } from '@react-navigation/native';
 import { Center } from '@gluestack-ui/themed';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBankStatement, setVoidCheque } from '../store/actions/bankActions';
 
 export default function DocumentsBank() {
   const navigation:any = useNavigation();
-  const [statement, setStatement]:any = useState(null);
-  const [cheque, setCheque] :any= useState(null);
- 
+  const statement = useSelector((state: any) => state.bank.statement);
+  const cheque = useSelector((state: any) => state.bank.cheque);
+  console.log("documnets are",statement,cheque)
+ const dispatch=useDispatch()
 
 
   const pickDocument = async (type:any) => {
@@ -35,12 +38,11 @@ export default function DocumentsBank() {
         type: ['image/*', 'application/pdf'],
       });
 
-      if (!result.canceled) {
-        if (type === 'statement') {
-          setStatement(result.assets[0]);
-        } else {
-          setCheque(result.assets[0]);
-        }
+      if (!result.canceled && result.assets.length > 0) {
+        const file = result.assets[0];
+        type === 'statement'
+          ? dispatch(setBankStatement(file))
+          : dispatch(setVoidCheque(file));
       }
     } catch (err) {
       console.warn('Document pick error:', err);

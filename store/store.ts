@@ -21,11 +21,13 @@ import { combineReducers } from 'redux';
 import ownerReducer from './reducers/ownerReducer';
 import businessReducer from './reducers/businessReducer';
 import tradingReducer from './reducers/tradingReducer';
+import bankReducer from './reducers/bankReducer';
 
 const rootReducer = combineReducers({
   owner: ownerReducer,
   business: businessReducer,
   trading: tradingReducer,
+  bank:bankReducer,
 });
 
 const store = createStore(rootReducer);
