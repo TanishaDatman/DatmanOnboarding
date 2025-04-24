@@ -67,7 +67,7 @@ export default function DocumentsUpload() {
     const address = useSelector((state: any) => state.owner.address);
     // console.log('address details from redux:', address);
     const image = useSelector((state: any) => state.owner.image);
-    // console.log('Image details from redux:', image);
+    console.log('Image details from redux:', image);
 
   const handleNoDocumentClick = async () => {
     const selectedFile = passport || license
@@ -75,7 +75,7 @@ export default function DocumentsUpload() {
       ...owner,
       ...contact,
       ...address,
-      image: selectedFile?.name
+      image: image?.path
     };
 
     try {

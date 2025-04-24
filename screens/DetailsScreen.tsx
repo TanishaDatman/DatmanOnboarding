@@ -52,10 +52,10 @@ export default function DetailsScreen() {
   const [bankingStatus, setBankingtatus] = useState<'pending' | 'inProgress'>('pending');
 
 
-  const ownerId = 38;
-  const companyId=8;
+  const ownerId = 44;
+  const companyId=10;
   const tradeID=4;
-  const bankID=2;
+  const bankID=4;
 
 
 
@@ -155,6 +155,8 @@ export default function DetailsScreen() {
     return '$amber100';
   };
 
+  const ownerverification = getStatusLabel("owner") === 'Verification in progress';
+
   return (
     <Box flex={1} bg="$white" pt="$8" px="$4">
       <ScrollView>
@@ -179,7 +181,8 @@ export default function DetailsScreen() {
 
         {/* Card List */}
         <VStack space="md">
-          {onboardingData.map((item, idx) => (
+          {/* {onboardingData.map((item, idx) => (
+            
             <Pressable key={idx} onPress={() => navigation.navigate(item.route)}>
               <Box
                 borderWidth={1}
@@ -215,7 +218,64 @@ export default function DetailsScreen() {
                 </HStack>
               </Box>
             </Pressable>
-          ))}
+          ))} */}
+           {onboardingData.map((item, idx) => {
+        const isVerificationInProgress = getStatusLabel(item.key) === 'Verification in progress';
+        const isOwnerStep = item.key === 'owner';
+        const isDisabledowner = isVerificationInProgress && isOwnerStep;
+        const isVerificationInProgressbusiness = getStatusLabel(item.key) === 'Verification in progress';
+        const isBusinessStep = item.key === 'business';
+        const isDisabledbusiness = isVerificationInProgressbusiness && isBusinessStep;
+        // const isVerificationInProgresstrade = getStatusLabel(item.key) === 'Verification in progress';
+        // const isBusinessStep = item.key === 'business';
+        // const isDisabledbusiness = isVerificationInProgresstrade && isBusinessStep;
+
+        return (
+          <Pressable
+            key={idx}
+            onPress={() => {
+              if (!isDisabledowner && !isDisabledbusiness) {
+                navigation.navigate(item.route);
+              }
+            }}
+          >
+            <Box
+              borderWidth={1}
+              borderColor="$borderLight300"
+              borderRadius="$xl"
+              p="$4"
+              bg="$white"
+              shadowColor="rgba(0, 0, 0, 0.05)"
+              shadowOpacity={0.1}
+              mb="$4"
+            >
+              <HStack space="md" alignItems="flex-start">
+                <Image source={item.icon} style={{ height: 22, marginTop: 4 }} />
+                <VStack flex={1}>
+                  <Text fontSize="$md" fontWeight="$semibold" mb="$1">
+                    {item.title}
+                  </Text>
+                  <Text fontSize="$sm" color="$textLight500">
+                    {item.description}
+                  </Text>
+                  <Box
+                    alignSelf="flex-start"
+                    bg={getStatusBg(item.key)}
+                    px="$3"
+                    py="$1"
+                    borderRadius="$full"
+                    mt="$2"
+                  >
+                    <Text fontSize="$xs" color={getStatusColor(item.key)}>
+                      {getStatusLabel(item.key)}
+                    </Text>
+                  </Box>
+                </VStack>
+              </HStack>
+            </Box>
+          </Pressable>
+        );
+      })}
         </VStack>
       </ScrollView>
 
