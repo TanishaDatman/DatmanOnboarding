@@ -181,44 +181,7 @@ export default function DetailsScreen() {
 
         {/* Card List */}
         <VStack space="md">
-          {/* {onboardingData.map((item, idx) => (
-            
-            <Pressable key={idx} onPress={() => navigation.navigate(item.route)}>
-              <Box
-                borderWidth={1}
-                borderColor="$borderLight300"
-                borderRadius="$xl"
-                p="$4"
-                bg="$white"
-                shadowColor="rgba(0, 0, 0, 0.05)"
-                shadowOpacity={0.1}
-              >
-                <HStack space="md" alignItems="flex-start">
-                  <Image source={item.icon} style={{ height: 22, marginTop: 4 }} />
-                  <VStack flex={1}>
-                    <Text fontSize="$md" fontWeight="$semibold" mb="$1">
-                      {item.title}
-                    </Text>
-                    <Text fontSize="$sm" color="$textLight500">
-                      {item.description}
-                    </Text>
-                    <Box
-                      alignSelf="flex-start"
-                      bg={getStatusBg(item.key)}
-                      px="$3"
-                      py="$1"
-                      borderRadius="$full"
-                      mt="$2"
-                    >
-                      <Text fontSize="$xs" color={getStatusColor(item.key)}>
-                        {getStatusLabel(item.key)}
-                      </Text>
-                    </Box>
-                  </VStack>
-                </HStack>
-              </Box>
-            </Pressable>
-          ))} */}
+       
            {onboardingData.map((item, idx) => {
         const isVerificationInProgress = getStatusLabel(item.key) === 'Verification in progress';
         const isOwnerStep = item.key === 'owner';
