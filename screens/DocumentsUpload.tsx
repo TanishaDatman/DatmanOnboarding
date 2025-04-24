@@ -40,7 +40,7 @@ export default function DocumentsUpload() {
       const result = await DocumentPicker.getDocumentAsync({
         type: ['image/*', 'application/pdf'],
       });
-      console.log('result',result)
+      console.log("result is ----======>",result)
 
       if (!result.canceled) {
         const selectedFile = result.assets[0];
@@ -67,14 +67,14 @@ export default function DocumentsUpload() {
     const address = useSelector((state: any) => state.owner.address);
     // console.log('address details from redux:', address);
     const image = useSelector((state: any) => state.owner.image);
-    // console.log('Image details from redux:', image);
+    console.log('Image details from redux:', image);
 
   const handleNoDocumentClick = async () => {
+    const selectedFile = passport || license
     const details = {
       ...owner,
       ...contact,
-      ...address,
-      image: image?.name,
+      ...address
     };
 
     try {

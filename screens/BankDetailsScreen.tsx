@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Text,
@@ -16,24 +16,32 @@ import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBankDetails } from '../store/actions/bankActions';
 
 const BankDetailsSchema = z
   .object({
-    accountholder: z.string().min(4, 'Account holder name is required'),
-    sortcode: z
+    accountHolderName: z.string().min(4, 'Account holder name is required'),
+    sortCode: z
       .string()
       .regex(/^\d{6}$/, 'Sort code must be exactly 6 digits'),
-      accno: z.string().min(8, 'Account number must be at least 8 digits').max(18, 'Account number can be a maximum of 18 digits').regex(/^\d+$/, 'Account number must be numeric'),    confirm: z.string().min(1, 'Confirm account number'),
+    accountNumber: z
+      .string()
+      .min(8, 'Account number must be at least 8 digits')
+      .max(18, 'Account number can be a maximum of 18 digits')
+      .regex(/^\d+$/, 'Account number must be numeric'),
+    confirmAccountNumber: z.string().min(1, 'Confirm account number'),
   })
-  .refine((data) => data.accno === data.confirm, {
+  .refine((data) => data.accountNumber === data.confirmAccountNumber, {
     message: 'Account numbers do not match',
-    path: ['confirm'],
+    path: ['confirmAccountNumber'],
   });
 
 type BankDetailsFormData = z.infer<typeof BankDetailsSchema>;
 
 const BankDetailsScreen = () => {
   const navigation: any = useNavigation();
+  const dispatch = useDispatch();
 
   const {
     control,
@@ -45,8 +53,22 @@ const BankDetailsScreen = () => {
   });
 
   const onSubmit = (data: BankDetailsFormData) => {
+    dispatch(
+      setBankDetails({
+        accountHolderName: data.accountHolderName,
+        sortCode: data.sortCode,
+        accountNumber: data.accountNumber,
+        confirmAccountNumber: data.confirmAccountNumber,
+      })
+    );
     navigation.navigate('DocumentsBank');
   };
+
+  const bankState = useSelector((state: any) => state.bank);
+
+  useEffect(() => {
+    console.log('Bank State:', bankState);
+  }, [bankState]);
 
   return (
     <Box flex={1} bg="$backgroundLight0">
@@ -80,7 +102,7 @@ const BankDetailsScreen = () => {
           <VStack space="xs">
             <Controller
               control={control}
-              name="accountholder"
+              name="accountHolderName"
               render={({ field: { onChange, value } }) => (
                 <>
                   <Input variant="underlined">
@@ -92,9 +114,9 @@ const BankDetailsScreen = () => {
                       autoCorrect={false}
                     />
                   </Input>
-                  {errors.accountholder && (
+                  {errors.accountHolderName && (
                     <Text color="$red600" fontSize="$xs">
-                      {errors.accountholder.message}
+                      {errors.accountHolderName.message}
                     </Text>
                   )}
                 </>
@@ -105,7 +127,7 @@ const BankDetailsScreen = () => {
           <VStack space="xs">
             <Controller
               control={control}
-              name="sortcode"
+              name="sortCode"
               render={({ field: { onChange, value } }) => (
                 <>
                   <Input variant="underlined">
@@ -113,13 +135,12 @@ const BankDetailsScreen = () => {
                       placeholder="Bank sort code"
                       value={value}
                       onChangeText={onChange}
-                      // autoCapitalize="none"
                       keyboardType="numeric"
                     />
                   </Input>
-                  {errors.sortcode && (
+                  {errors.sortCode && (
                     <Text color="$red600" fontSize="$xs">
-                      {errors.sortcode.message}
+                      {errors.sortCode.message}
                     </Text>
                   )}
                 </>
@@ -130,7 +151,7 @@ const BankDetailsScreen = () => {
           <VStack space="xs">
             <Controller
               control={control}
-              name="accno"
+              name="accountNumber"
               render={({ field: { onChange, value } }) => (
                 <>
                   <Input variant="underlined">
@@ -139,12 +160,11 @@ const BankDetailsScreen = () => {
                       value={value}
                       onChangeText={onChange}
                       keyboardType="numeric"
-
                     />
                   </Input>
-                  {errors.accno && (
+                  {errors.accountNumber && (
                     <Text color="$red600" fontSize="$xs">
-                      {errors.accno.message}
+                      {errors.accountNumber.message}
                     </Text>
                   )}
                 </>
@@ -155,7 +175,7 @@ const BankDetailsScreen = () => {
           <VStack space="xs">
             <Controller
               control={control}
-              name="confirm"
+              name="confirmAccountNumber"
               render={({ field: { onChange, value } }) => (
                 <>
                   <Input variant="underlined">
@@ -164,12 +184,11 @@ const BankDetailsScreen = () => {
                       value={value}
                       onChangeText={onChange}
                       keyboardType="numeric"
-
                     />
                   </Input>
-                  {errors.confirm && (
+                  {errors.confirmAccountNumber && (
                     <Text color="$red600" fontSize="$xs">
-                      {errors.confirm.message}
+                      {errors.confirmAccountNumber.message}
                     </Text>
                   )}
                 </>
@@ -179,7 +198,6 @@ const BankDetailsScreen = () => {
         </VStack>
       </ScrollView>
 
-      {/* Footer */}
       <HStack p="$4" space="md" bg="$backgroundLight0">
         <Button
           variant="outline"

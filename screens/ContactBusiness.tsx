@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { setBusinessContact } from '../store/actions/bussinessActions';
+import { useDispatch } from 'react-redux';
 
 // Define Zod schema for validation
 const businessContactSchema = z.object({
@@ -45,11 +47,19 @@ const ContactBusiness = () => {
   // Check if the form is valid
   const isNextEnabled = isValid;
 
+  const dispatch=useDispatch()
+
   // Handle form submission
+  // const onSubmit = (data: any) => {
+  //   // console.log('Submitted Business Contact Details:', data);
+  //   navigation.navigate('AddressBusiness');
+  // };
+
   const onSubmit = (data: any) => {
-    // console.log('Submitted Business Contact Details:', data);
-    navigation.navigate('AddressBusiness');
-  };
+      dispatch(setBusinessContact(data));
+        navigation.navigate("AddressBusiness");
+      };
+  
 
   return (
     <GluestackUIProvider config={customConfig}>

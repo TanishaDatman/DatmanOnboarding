@@ -18,6 +18,11 @@ import {
   Modal,
   ModalBody,
   Image,
+  SelectInput,
+  SelectTrigger,
+  Select,
+  SelectPortal,
+  SelectContent,
 } from '@gluestack-ui/themed';
 import { ModalBackdrop } from '@gluestack-ui/themed';
 import { ModalContent } from '@gluestack-ui/themed';
@@ -27,6 +32,11 @@ import { useNavigation } from '@react-navigation/native';
 import { Pressable } from '@gluestack-ui/themed';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTradingName as setTradingNameAction,setSameAsRegistered, setTradingAddress } from '../store/actions/tradingActions';
+import { SelectIcon } from '@gluestack-ui/themed';
+import { SelectBackdrop } from '@gluestack-ui/themed';
+import { ChevronDownIcon } from '@gluestack-ui/themed';
+import { SelectItem } from '@gluestack-ui/themed';
+import { useTradingApi } from '../hooks/useTradingApi';
 
 const TradingInfoScreen = () => {
   const [isSameAsRegistered, setIsSameAsRegistered] = useState(true);
@@ -52,31 +62,60 @@ const TradingInfoScreen = () => {
   );
   const dispatch = useDispatch();
 
+  const countries = ['UK', 'USA', 'Mexico', 'Canada', 'Australia', 'Ireland'];
 
-  const handleNext = () => {
-    dispatch(setTradingNameAction(tradingName));
-    dispatch(setSameAsRegistered(isSameAsRegistered));
+  // const handleNext = () => {
+  //   dispatch(setTradingNameAction(tradingName));
+  //   dispatch(setSameAsRegistered(isSameAsRegistered));
   
-    if (!isSameAsRegistered) {
-      dispatch(setTradingAddress({
-        postCode,
-        addressLine1,
-        addressLine2,
-        townCity,
-        county,
-        country,
-      }));
+  //   if (!isSameAsRegistered) {
+  //     dispatch(setTradingAddress({
+  //       postCode,
+  //       addressLine1,
+  //       addressLine2,
+  //       townCity,
+  //       county,
+  //       country,
+  //     }));
+  //   }
+  
+  //   setModal(true);
+  // };
+
+  const handleNext = async () => {
+    const tradingDetails = {
+      tradingName,
+      postCode,
+      addressLine1,
+      addressLine2,
+      townCity,
+      county,
+      country,
+      isSameAsRegistered,
+    };
+  
+    try {
+      await postTradingDetails(tradingDetails); 
+      console.log("now trading details.....",tradingDetails)// Call the API to post the data
+      setModal(true); // Show success modal after the details are posted
+    } catch (error) {
+      // Handle error, display a message if necessary
+      console.error('Error posting trading details:', error);
     }
-  
-    setModal(true);
   };
+  
   
 
   const tradingState = useSelector((state: any) => state.trading);
 
-  useEffect(() => {
-    console.log('Current Redux Trading State:', tradingState);
-  }, [tradingState]);
+useEffect(() => {
+  console.log('%c[Trading State Updated]', 'color: green; font-weight: bold;');
+  console.log('Trading Name:', tradingState.tradingName);
+  console.log('Is Same As Registered:', tradingState.isSameAsRegistered);
+  console.log('Trading Address:', tradingState.address);
+}, [tradingState]);
+
+const {postTradingDetails}=useTradingApi()
   
 
   return (
@@ -196,13 +235,29 @@ const TradingInfoScreen = () => {
 
             <VStack space="sm">
               <Text fontSize="$sm">Country</Text>
-              <Input   variant='underlined'>
-                <InputField
-                  placeholder="Enter country"
-                  value={country}
-                  onChangeText={setCountry}
-                />
-              </Input>
+              <Box pb="$2">
+          <Select
+            selectedValue={country}
+            onValueChange={(value) => setCountry(value)}
+          >
+            <SelectTrigger borderBottomWidth={1}
+      borderColor="$borderLight300"
+      borderWidth={0} // removes other borders
+      borderRadius={0} // no rounding
+      px={0}>
+              <SelectInput placeholder="Country" />
+              <SelectIcon as={ChevronDownIcon} />
+            </SelectTrigger>
+            <SelectPortal>
+              <SelectBackdrop />
+              <SelectContent>
+                {countries.map((name) => (
+                  <SelectItem key={name} label={name} value={name} />
+                ))}
+              </SelectContent>
+            </SelectPortal>
+          </Select>
+        </Box>
             </VStack>
           </VStack>
         )}
@@ -225,7 +280,7 @@ const TradingInfoScreen = () => {
           borderRadius="$full"
           bg={isNextEnabled ? "$black" : "$coolGray300"}
           disabled={!isNextEnabled}
-          onPress={() => isNextEnabled && setModal(true)}
+          onPress={async()=>await handleNext()}
         >
           <ButtonText color="$white">Next</ButtonText>
         </Button>
