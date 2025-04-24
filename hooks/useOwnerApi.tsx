@@ -39,7 +39,7 @@ export const useOwnerApi = () => {
       formData.append('town_city', details.city);
       formData.append('county', details.county);
       formData.append('country', details.country);
-      formData.append('documentUrl', details.image);
+      // formData.append('documentUrl', details.image);
       formData.append('flag','1')
   
       const response = await fetch(`${BASE_URL}/api/business-detail`, {

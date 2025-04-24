@@ -52,10 +52,10 @@ export default function DetailsScreen() {
   const [bankingStatus, setBankingtatus] = useState<'pending' | 'inProgress'>('pending');
 
 
-  const ownerId = 44;
-  const companyId=10;
-  const tradeID=4;
-  const bankID=4;
+  const ownerId = 48;
+  const companyId=11;
+  const tradeID=7;
+  const bankID=6;
 
 
 

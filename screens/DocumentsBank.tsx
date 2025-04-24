@@ -218,7 +218,6 @@ export default function DocumentsBank() {
         sortCode: bankState?.sortCode,
         accountNumber: bankState?.accountNumber,
         confirmAccountNumber: bankState?.confirmAccountNumber,
-        document: statement?.uri || cheque?.uri || '',  
         flag: 1,
       };
 
