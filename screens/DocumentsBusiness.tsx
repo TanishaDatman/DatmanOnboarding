@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Text,
@@ -21,6 +21,8 @@ import {
 import * as DocumentPicker from 'expo-document-picker';
 import { useNavigation } from '@react-navigation/native';
 import { Center } from '@gluestack-ui/themed';
+import { useSelector } from 'react-redux';
+import { useCompanyApi } from '../hooks/useCompanyApi';
 
 export default function DocumentsBusiness() {
   const navigation:any = useNavigation();
@@ -52,9 +54,49 @@ export default function DocumentsBusiness() {
       console.warn('Document pick error:', err);
     }
   };
-  
 
+  const {postCompanyDetails}=useCompanyApi();
+
+  const companyWhat = useSelector((state: any) => state.business.companywhat);
+  const orgType = useSelector((state: any) => state.business.businessType);
+
+  const company = useSelector((state: any) => state.business.company);
+const companyNumber = company?.companyNumber;
+const legalName = company?.legalName;
+
+const contact = useSelector((state: any) => state.business.contact);
+const email = contact?.email;
+const phone = contact?.phone;
+const url = contact?.url;
+
+const address = useSelector((state: any) => state.business.address);
+// useEffect(() => {
+//   // console.log('%c[Trading State Updated]', 'color: green; font-weight: bold;');
+//   // console.log('Comapny type:', companyWhat);
+//   console.log('company details:', company.companyNumber);
+//   // console.log(' Address:', ...address);
+// }, [company]);
   
+const handleNoDocumentClick = async () => {
+  // const selectedFile = utility || rental || rates
+  const details = {
+    ...company,
+    ...contact,
+    ...address,
+    companyWhat,
+    orgType,
+    // image: selectedFile?.name
+  };
+
+  try {
+    await postCompanyDetails(details);
+    console.log('Business detail submitted without document',details);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
 
   const isNextEnabled = utility || rental || rates;
 
@@ -182,9 +224,10 @@ export default function DocumentsBusiness() {
                 borderRadius="$full"
                 bg="$black"
                 flex={1}
-                onPress={() => {
+                onPress={async() => {
                   setModal(true);
                   setShowModal(false);
+                  await handleNoDocumentClick();
                 //   navigation.navigate('NextStep'); // adjust as needed
                 }}
               >

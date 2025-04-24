@@ -48,7 +48,7 @@ export const useOwnerApi = () => {
   
       // Here, directly parse the JSON response
       const data = await response.json();  // No need for JSON.parse(text) again
-      // console.log('Raw response------>:', data);
+      console.log('Raw response------>:', data);
   
       if (!response.ok) throw new Error(data.message || 'Failed to submit details');
   
@@ -65,7 +65,7 @@ export const useOwnerApi = () => {
     try {
       setLoading(true);
       const response = await fetch(`${BASE_URL}/api/business-detail/${id}`, { method: 'GET' });
-      const data = await response;
+      const data = await response.json();
       // console.log("data in review is",data);
       
       if (!response.ok) throw new Error('Failed to fetch details');

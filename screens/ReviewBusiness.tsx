@@ -19,6 +19,7 @@ import {
 } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import { useCompanyApi } from '../hooks/useCompanyApi';
 
 export default function ReviewBusiness() {
   const navigation:any = useNavigation();
@@ -39,11 +40,26 @@ const url = contact?.url;
 const address = useSelector((state: any) => state.business.address);
 
 
+const {postCompanyDetails}=useCompanyApi()
 
-
-
-  const handleConfirm = () => {
-    setShowModal(true);
+  const handleConfirm = async () => {
+    // const selectedFile = utility || rental || rates
+    const details = {
+      ...company,
+      ...contact,
+      ...address,
+      companyWhat,
+      orgType,
+      // image: selectedFile?.name
+    };
+  
+    try {
+      await postCompanyDetails(details);
+      setShowModal(true);
+      console.log('Business detail submitted without document',details);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleContinue = () => {

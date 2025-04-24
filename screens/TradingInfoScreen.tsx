@@ -36,6 +36,7 @@ import { SelectIcon } from '@gluestack-ui/themed';
 import { SelectBackdrop } from '@gluestack-ui/themed';
 import { ChevronDownIcon } from '@gluestack-ui/themed';
 import { SelectItem } from '@gluestack-ui/themed';
+import { useTradingApi } from '../hooks/useTradingApi';
 
 const TradingInfoScreen = () => {
   const [isSameAsRegistered, setIsSameAsRegistered] = useState(true);
@@ -63,23 +64,46 @@ const TradingInfoScreen = () => {
 
   const countries = ['UK', 'USA', 'Mexico', 'Canada', 'Australia', 'Ireland'];
 
-  const handleNext = () => {
-    dispatch(setTradingNameAction(tradingName));
-    dispatch(setSameAsRegistered(isSameAsRegistered));
+  // const handleNext = () => {
+  //   dispatch(setTradingNameAction(tradingName));
+  //   dispatch(setSameAsRegistered(isSameAsRegistered));
   
-    if (!isSameAsRegistered) {
-      dispatch(setTradingAddress({
-        postCode,
-        addressLine1,
-        addressLine2,
-        townCity,
-        county,
-        country,
-      }));
+  //   if (!isSameAsRegistered) {
+  //     dispatch(setTradingAddress({
+  //       postCode,
+  //       addressLine1,
+  //       addressLine2,
+  //       townCity,
+  //       county,
+  //       country,
+  //     }));
+  //   }
+  
+  //   setModal(true);
+  // };
+
+  const handleNext = async () => {
+    const tradingDetails = {
+      tradingName,
+      postCode,
+      addressLine1,
+      addressLine2,
+      townCity,
+      county,
+      country,
+      isSameAsRegistered,
+    };
+  
+    try {
+      await postTradingDetails(tradingDetails); 
+      console.log("now trading details.....",tradingDetails)// Call the API to post the data
+      setModal(true); // Show success modal after the details are posted
+    } catch (error) {
+      // Handle error, display a message if necessary
+      console.error('Error posting trading details:', error);
     }
-  
-    setModal(true);
   };
+  
   
 
   const tradingState = useSelector((state: any) => state.trading);
@@ -90,6 +114,8 @@ useEffect(() => {
   console.log('Is Same As Registered:', tradingState.isSameAsRegistered);
   console.log('Trading Address:', tradingState.address);
 }, [tradingState]);
+
+const {postTradingDetails}=useTradingApi()
   
 
   return (
@@ -254,7 +280,7 @@ useEffect(() => {
           borderRadius="$full"
           bg={isNextEnabled ? "$black" : "$coolGray300"}
           disabled={!isNextEnabled}
-          onPress={handleNext}
+          onPress={async()=>await handleNext()}
         >
           <ButtonText color="$white">Next</ButtonText>
         </Button>
