@@ -5,7 +5,7 @@ import { Platform } from 'react-native';
 const BASE_URL =
   Platform.OS === 'web'
     ? 'http://localhost:3000'
-    : 'https://fe67-49-249-92-34.ngrok-free.app';
+    : 'https://85f4-49-249-92-34.ngrok-free.app';
 
 export interface CompanyDetails {
   companyType: string;
