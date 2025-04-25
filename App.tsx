@@ -96,6 +96,8 @@ import CongoScreen from './screens/CongoScreen';
 import { Provider } from 'react-redux';
 import store from "./store/store"
 import HomeOnboard from './screens/HomeOnboard';
+// import { useStyled } from '@gluestack-ui/nativewind-utils'; 
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -130,6 +132,9 @@ function HomeStack() {
 }
 
 export default function App() {
+
+  // useStyled();
+
   return (
     <Provider store={store}>
     <GluestackUIProvider config={customConfig}>

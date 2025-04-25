@@ -86,7 +86,7 @@ export default function Address() {
     <Box flex={1} bg="#F5F6F8" px="$4" pt="$6" borderTopLeftRadius={30} borderTopRightRadius={30}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <HStack alignItems="center" mt="$3" mb="$6">
+        <HStack  alignItems="center" mt="$3" mb="$6">
                 <Pressable onPress={() => navigation.goBack()}>
                   <Image
                     source={require('../assets/images/arrow_forward.png')}
@@ -107,6 +107,7 @@ export default function Address() {
           {fields.map((label, index) => (
             <Box key={index}  borderColor="$borderLight300" pb="$2">
             <Input
+            
             variant='underlined'
               style={{
                 // fontSize: 16,
