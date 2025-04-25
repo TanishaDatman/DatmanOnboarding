@@ -178,7 +178,7 @@ import {
 import * as DocumentPicker from 'expo-document-picker';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { setBankStatement, setVoidCheque } from '../store/actions/bankActions';
+import { setBankStatement, setVoidCheque } from '../store/features/bank/bankSlice';
 import { useBankApi } from '../hooks/useBankApi'; // adjust path if needed
 
 export default function DocumentsBank() {

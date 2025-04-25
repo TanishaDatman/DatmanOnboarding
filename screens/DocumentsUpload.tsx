@@ -22,7 +22,7 @@ import {
 import * as DocumentPicker from 'expo-document-picker';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { setImg } from '../store/actions/ownerActions';
+import { setImg } from '../store/features/owner/ownerSlice';
 import { useOwnerApi } from '../hooks/useOwnerApi';
 
 export default function DocumentsUpload() {
@@ -66,8 +66,8 @@ export default function DocumentsUpload() {
     // console.log('conatct details from redux:', contact);
     const address = useSelector((state: any) => state.owner.address);
     // console.log('address details from redux:', address);
-    const image = useSelector((state: any) => state.owner.image);
-    console.log('Image details from redux:', image);
+    // const image = useSelector((state: any) => state.owner.image);
+    // console.log('Image details from redux:', image);
 
   const handleNoDocumentClick = async () => {
     const selectedFile = passport || license

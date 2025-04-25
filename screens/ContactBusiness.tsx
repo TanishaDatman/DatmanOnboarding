@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { setBusinessContact } from '../store/actions/bussinessActions';
+import { setBusinessContact } from '../store/features/business/businessSlice';
 import { useDispatch } from 'react-redux';
 
 // Define Zod schema for validation

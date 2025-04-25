@@ -17,7 +17,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useDispatch, useSelector } from 'react-redux';
-import { setBankDetails } from '../store/actions/bankActions';
+import { setBankDetails } from '../store/features/bank/bankSlice';
 
 const BankDetailsSchema = z
   .object({

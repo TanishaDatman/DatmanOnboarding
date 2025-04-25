@@ -31,7 +31,7 @@ import { ModalFooter } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { Pressable } from '@gluestack-ui/themed';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTradingName as setTradingNameAction,setSameAsRegistered, setTradingAddress } from '../store/actions/tradingActions';
+import { setTradingName as setTradingNameAction,setSameAsRegistered, setTradingAddress } from '../store/features/trading/tradingSlice';
 import { SelectIcon } from '@gluestack-ui/themed';
 import { SelectBackdrop } from '@gluestack-ui/themed';
 import { ChevronDownIcon } from '@gluestack-ui/themed';

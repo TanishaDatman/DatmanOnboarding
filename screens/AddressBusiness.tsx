@@ -21,7 +21,7 @@ import { SelectPortal } from '@gluestack-ui/themed';
 import { SelectBackdrop } from '@gluestack-ui/themed';
 import { SelectContent } from '@gluestack-ui/themed';
 import { SelectItem } from '@gluestack-ui/themed';
-import { setBusinessAddress } from '../store/actions/bussinessActions';
+import { setBusinessAddress } from '../store/features/business/businessSlice';
 import { useDispatch } from 'react-redux';
 
 export default function AddressBusiness() {

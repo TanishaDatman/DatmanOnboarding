@@ -15,7 +15,7 @@ import {
 import { HStack } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from '@gluestack-ui/themed';
-import {setBusinessType} from "../store/actions/bussinessActions"
+import {setBusinessType} from "../store/features/business/businessSlice"
 import { useDispatch } from 'react-redux';
 
 

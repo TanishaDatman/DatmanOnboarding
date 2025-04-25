@@ -5,7 +5,7 @@ import { Button } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from '@gluestack-ui/themed';
 import { useDispatch } from 'react-redux';
-import { setwhatbusiness } from '../store/actions/bussinessActions';
+import { setwhatbusiness } from '../store/features/business/businessSlice';
 
 const businessOptions = [
   {

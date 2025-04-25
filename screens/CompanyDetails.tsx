@@ -17,7 +17,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch } from 'react-redux';
-import { setCompanyDetails } from '../store/actions/bussinessActions';
+import { setCompanyDetails } from '../store/features/business/businessSlice';
 
 // Define Zod schema for validation
 const companySchema = z.object({

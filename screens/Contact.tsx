@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { setContactDetails } from '../store/actions/ownerActions';
+import { setContactDetails } from '../store/features/owner/ownerSlice';
 import { 
   GluestackUIProvider,
   Box,

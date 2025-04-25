@@ -23,7 +23,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { ChevronDownIcon } from '@gluestack-ui/themed';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAddressDetails } from '../store/actions/ownerActions'; 
+import { setAddressDetails } from '../store/features/owner/ownerSlice'; 
 import { InputField } from '@gluestack-ui/themed';
 
 export default function Address() {
@@ -62,22 +62,30 @@ export default function Address() {
     }
   }, [address]);
 
-  const isNextEnabled = country.trim() && postCode.trim() && houseNo.trim() && street.trim() && town.trim() && county.trim();
+  // const isNextEnabled = country.trim() && postCode.trim() && houseNo.trim() && street.trim() && town.trim() && county.trim();
+
+  const isNextEnabled =
+  (country || '').trim() &&
+  (postCode || '').trim() &&
+  (houseNo || '').trim() &&
+  (street || '').trim() &&
+  (town || '').trim() &&
+  (county || '').trim();
 
 
   const handleNext = () => {
     if(!isNextEnabled) return;
     const addressDetails = {
-      country,
       postCode,
       houseNo,
       street,
-      town,
+      city:town,
       county,
+      country,
     };
 
     dispatch(setAddressDetails(addressDetails));
-    // console.log('Submitted Address Details:', addressDetails);
+    console.log('Submitted Address Details:', addressDetails);
 
     navigation.navigate('Documents');
   };

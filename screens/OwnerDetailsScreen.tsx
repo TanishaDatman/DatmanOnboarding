@@ -6,7 +6,7 @@ import {
 } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { setOwnerDetails } from '../store/actions/ownerActions';
+import { setOwnerDetails } from '../store/features/owner/ownerSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Pressable } from '@gluestack-ui/themed';
 import { useForm, Controller } from 'react-hook-form';
