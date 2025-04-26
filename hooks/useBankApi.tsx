@@ -147,7 +147,7 @@ export const useBankApi = () => {
         throw new Error("Account numbers do not match");
       }
 
-      const response = await fetch(`${BASE_URL}/api/bank-details`, {
+      const response = await fetch(`${BASE_URL}/dev/api/bank-details`, {
         method: "POST",
         headers: {
           // Don't set Content-Type, fetch will handle it
@@ -176,7 +176,7 @@ export const useBankApi = () => {
     try {
       setLoading(true);
 
-      const response = await fetch(`${BASE_URL}/api/bank-details/${id}`);
+      const response = await fetch(`${BASE_URL}/dev/api/bank-details/${id}`);
       const data = await response.json();
       console.log("data---->",data)
 

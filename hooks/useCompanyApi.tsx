@@ -52,7 +52,7 @@ export const useCompanyApi = () => {
         formData.append('document', details.document); // 👈 make sure it's a File/Blob
       }
 
-      const response = await fetch(`${BASE_URL}/api/company-detail`, {
+      const response = await fetch(`${BASE_URL}/dev/api/company-detail`, {
         method: 'POST',
         body: formData,
       });
@@ -75,7 +75,7 @@ export const useCompanyApi = () => {
   const getCompanyDetails = async (id: any) => {
     try {
       setLoading(true);
-      const response = await fetch(`${BASE_URL}/api/company-detail/${id}`);
+      const response = await fetch(`${BASE_URL}/dev/api/company-detail/${id}`);
 
       const data = await response.json();
 console.log("Inside hook get company detaiks..........",data)

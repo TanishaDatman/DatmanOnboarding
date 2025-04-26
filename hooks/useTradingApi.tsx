@@ -27,7 +27,7 @@ export const useTradingApi = () => {
 
       console.log("details in trading are......",details)
       
-      const response = await fetch(`${BASE_URL}/api/trading-detail`, {
+      const response = await fetch(`${BASE_URL}/dev/api/trading-detail`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',  // 👈 Important!
@@ -59,7 +59,7 @@ export const useTradingApi = () => {
   const getTradingDetails = async (id: any) => {
     try {
       setLoading(true);
-      const response = await fetch(`${BASE_URL}/api/trading-detail/${id}`, { method: 'GET' });
+      const response = await fetch(`${BASE_URL}/dev/api/trading-detail/${id}`, { method: 'GET' });
       const data = await response.json();
   
       if (!response.ok) throw new Error('Failed to fetch details');

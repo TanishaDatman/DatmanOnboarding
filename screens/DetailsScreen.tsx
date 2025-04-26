@@ -52,7 +52,7 @@ export default function DetailsScreen() {
   const [bankingStatus, setBankingtatus] = useState<'pending' | 'inProgress'>('pending');
 
 
-  const ownerId = 62;
+  const ownerId = 7;
   const companyId=22;
   const tradeID=18;
   const bankID=18;
@@ -83,7 +83,7 @@ export default function DetailsScreen() {
         const ownerData = await getOwnerDetails(ownerId);
         console.log('Owner data:', ownerData);
   
-        if (ownerData?.flag == 1) {
+        if (ownerData?.data?.flag == 1) {
           setOwnerStatus('inProgress');
         }
   
