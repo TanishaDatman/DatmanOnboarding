@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import LottieView from 'lottie-react-native';
 
 import {
@@ -18,6 +18,10 @@ import {
 import { Pressable, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AlertCircle } from 'lucide-react-native';
+import { useOwnerApi } from '../hooks/useOwnerApi';
+import { useCompanyApi } from '../hooks/useCompanyApi';
+import { useTradingApi } from '../hooks/useTradingApi';
+import { useBankApi } from '../hooks/useBankApi';
 
 export default function HomeScreen() {
   const [activeItem, setActiveItem] = useState<string | null>(null);
@@ -47,6 +51,77 @@ export default function HomeScreen() {
   ];
 
   const { width } = useWindowDimensions();
+
+  const { getOwnerDetails } = useOwnerApi();
+    const {getCompanyDetails}=useCompanyApi()
+    const {getTradingDetails}=useTradingApi()
+    const {getBankDetails}=useBankApi()
+
+    const ownerId = 7;
+  const companyId=2;
+  const tradeID=2;
+  const bankID=3;
+
+  const [track, setTrack] = useState<number>(0); 
+  const [progress, setProgress] = useState<number>(0); // State for progress
+
+
+   
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const ownerData = await getOwnerDetails(ownerId);
+        console.log('Owner data:', ownerData);
+        if (ownerData?.data?.flag === 1) {
+          setTrack(1); // Use setTrack to update the state
+        }
+
+        const companyData = await getCompanyDetails(companyId);
+        console.log('Company data:', companyData);
+        if (companyData?.data?.flag === 1) {
+          setTrack(2);
+        }
+
+        const tradingData = await getTradingDetails(tradeID);
+        console.log('Trading data:', tradingData);
+
+        if (tradingData?.data?.flag === 1) {
+          setTrack(3);
+        }
+
+        const bankData = await getBankDetails(bankID);
+        console.log('Banking data:', bankData);
+        if (bankData?.data?.flag === 1) {
+          setTrack(4);
+        }
+
+      } catch (error) {
+        console.error('Error fetching details:', error);
+      }
+    };
+
+    fetchDetails();
+  }, []); 
+
+  useEffect(() => {
+    switch (track) {
+      case 1:
+        setProgress(25);
+        break;
+      case 2:
+        setProgress(50);
+        break;
+      case 3:
+        setProgress(75);
+        break;
+      case 4:
+        setProgress(100);
+        break;
+      default:
+        setProgress(0); 
+
+    }
+  }, [track]); 
 
   const getItemsPerRow = () => {
     if (width < 768) return 2;
@@ -158,12 +233,12 @@ export default function HomeScreen() {
                 Verification progress
               </Text>
               <Text fontSize="$sm" fontWeight="$bold" color="$black">
-                25%
+                {progress}%
               </Text>
             </HStack>
-            <Progress value={25} h="$1.5" bgColor="$coolGray300" rounded="$full">
-              <ProgressFilledTrack h="$1.5" bgColor="$black" />
-            </Progress>
+            <Progress value={progress} h="$1.5" bgColor="$coolGray300" rounded="$full">
+        <ProgressFilledTrack h="$1.5" bgColor="$black" />
+      </Progress>
           </VStack>
         </VStack>
       </Box>
