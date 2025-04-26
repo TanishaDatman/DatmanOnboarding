@@ -53,9 +53,9 @@ export default function DetailsScreen() {
 
 
   const ownerId = 7;
-  const companyId=22;
-  const tradeID=18;
-  const bankID=18;
+  const companyId=2;
+  const tradeID=2;
+  const bankID=2;
 
 
 
@@ -90,14 +90,14 @@ export default function DetailsScreen() {
         const companyData = await getCompanyDetails(companyId);
         console.log('Company data:', companyData);
   
-        if (companyData?.flag == 1) {
+        if (companyData?.data?.flag == 1) {
           setCompanyStatus('inProgress');
         }
 
         const traddingData = await getTradingDetails(tradeID);
         console.log('trading data:', traddingData);
   
-        if (traddingData?.flag == 1) {
+        if (traddingData?.data?.flag == 1) {
           setTradingtatus('inProgress');
         }
 

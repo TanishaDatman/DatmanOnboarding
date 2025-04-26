@@ -99,9 +99,128 @@
 
 
 
+// import { useState } from 'react';
+// import { Platform } from 'react-native';
+
+// export interface OwnerDetails {
+//   title: string;
+//   firstName: string;
+//   lastName: string;
+//   dob: string;
+//   nationality: string;
+//   email?: string;
+//   phone?: string;
+//   postCode?: string;
+//   houseNo?: string;
+//   street?: string;
+//   city?: string;
+//   county?: string;
+//   country?: string;
+//   flag?: string;
+// }
+
+// const BASE_URL =
+//   Platform.OS === 'web'
+//     ? 'http://localhost:3000'
+//     : 'https://85f4-49-249-92-34.ngrok-free.app';
+
+// export const useOwnerApi = () => {
+//   const [loading, setLoading] = useState(false);
+
+//   const postOwnerDetails = async (details: OwnerDetails) => {
+//     try {
+//       setLoading(true);
+//       console.log('Submitting owner details:', details);
+
+//       const payload = {
+//         title: details.title,
+//         first_name: details.firstName,
+//         last_name: details.lastName,
+//         dob: details.dob,
+//         nationality: details.nationality,
+//         emailId: details.email,
+//         phnno: details.phone,
+//         postcode: details.postCode,
+//         houseno: details.houseNo,
+//         street: details.street,
+//         town_city: details.city,
+//         county: details.county,
+//         country: details.country,
+//         flag:1, // Default flag to '1' if not provided
+//       };
+
+//       const response = await fetch(`${BASE_URL}/dev/api/business-details`, {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json', // Important for JSON POST
+//         },
+//         body: JSON.stringify(payload),
+//       });
+
+//       const data = await response.json();
+//       console.log('Response:', data);
+
+//       if (!response.ok) {
+//         throw new Error(data.message || 'Failed to submit owner details');
+//       }
+
+//       return data;
+//     } catch (error) {
+//       console.error('Error submitting owner details:', error);
+//       throw error;
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const getOwnerDetails = async (id: string | number) => {
+//     try {
+//       setLoading(true);
+//       console.log('Fetching owner details for ID:', id);
+
+//       const response = await fetch(`${BASE_URL}/dev/api/business-details/${id}`, {
+//         method: 'GET',
+//       });
+
+//       const data = await response.json();
+//       console.log('Fetched data:', data);
+
+//       if (!response.ok) {
+//         throw new Error('Failed to fetch owner details');
+//       }
+
+//       return data;
+//     } catch (error) {
+//       console.error('Error fetching owner details:', error);
+//       throw error;
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return {
+//     postOwnerDetails,
+//     getOwnerDetails,
+//     loading,
+//   };
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { useState } from 'react';
 import { Platform } from 'react-native';
 
+// 👇 Incoming details structure
 export interface OwnerDetails {
   title: string;
   firstName: string;
@@ -116,7 +235,25 @@ export interface OwnerDetails {
   city?: string;
   county?: string;
   country?: string;
-  flag?: string;
+  flag?: string; // optional
+}
+
+// 👇 Final payload structure to send to the API
+export interface OwnerPayload {
+  title: string;
+  first_name: string;
+  last_name: string;
+  dob: string;
+  nationality: string;
+  emailId?: string;
+  phnno?: string;
+  postcode?: string;
+  houseno?: string;
+  street?: string;
+  town_city?: string;
+  county?: string;
+  country?: string;
+  flag: number;
 }
 
 const BASE_URL =
@@ -132,7 +269,8 @@ export const useOwnerApi = () => {
       setLoading(true);
       console.log('Submitting owner details:', details);
 
-      const payload = {
+      // 🔥 Type the payload correctly
+      const payload: OwnerPayload = {
         title: details.title,
         first_name: details.firstName,
         last_name: details.lastName,
@@ -146,13 +284,13 @@ export const useOwnerApi = () => {
         town_city: details.city,
         county: details.county,
         country: details.country,
-        flag:1, // Default flag to '1' if not provided
+        flag: 1, // always sending '1' here
       };
 
       const response = await fetch(`${BASE_URL}/dev/api/business-details`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // Important for JSON POST
+          'Content-Type': 'application/json', 
         },
         body: JSON.stringify(payload),
       });
