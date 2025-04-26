@@ -60,7 +60,7 @@ export default function HomeScreen() {
     const ownerId = 7;
   const companyId=2;
   const tradeID=2;
-  const bankID=3;
+  const bankID=2;
 
   const [track, setTrack] = useState<number>(0); 
   const [progress, setProgress] = useState<number>(0); // State for progress
@@ -168,7 +168,9 @@ export default function HomeScreen() {
     marginRight={-16}
   >
     <ImageBackground
-      source={require('../assets/images/card.png')}
+      source={progress === 100
+        ? require('../assets/images/new.png') 
+        : require('../assets/images/card.png') }
       resizeMode="cover"
       style={{ 
         flex: 1,
@@ -184,6 +186,7 @@ export default function HomeScreen() {
           <Text fontSize="$lg" fontWeight="$bold" color="$black">
             Available balance
           </Text>
+          
           <Box flexDirection="row">
   <Box height={50} width={70}>
     <LottieView
@@ -205,11 +208,12 @@ export default function HomeScreen() {
   space="xs"
   flexWrap="nowrap"
 >
-  <Icon 
-    as={AlertCircleIcon} 
-    color="$amber600" 
-    size="xs" 
-  />
+<Icon 
+  as={AlertCircleIcon} 
+  color={progress === 100 ? "$black" : "$amber600"} 
+  size="xs" 
+/>
+
   
   <Text 
     fontSize="$2xs" 
@@ -223,11 +227,17 @@ export default function HomeScreen() {
     $md={{ fontSize: "$sm" }} 
     $lg={{ fontSize: "$md" }} 
   >
-    Complete the onboarding verification to withdraw money.
+    {
+      progress==100 ? "Onboarding verification is pending and will be verified soon." : "Complete the onboarding verification to withdraw money."
+    }
+    
   </Text>
 </HStack>
 
-          <VStack space="xs">
+
+{
+  progress==100 ? "" :
+  <VStack space="xs">
             <HStack justifyContent="space-between" alignItems="center">
               <Text fontSize="$sm" color="$black">
                 Verification progress
@@ -240,6 +250,8 @@ export default function HomeScreen() {
         <ProgressFilledTrack h="$1.5" bgColor="$black" />
       </Progress>
           </VStack>
+}
+          
         </VStack>
       </Box>
     </ImageBackground>
