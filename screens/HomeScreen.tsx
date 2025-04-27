@@ -58,9 +58,9 @@ export default function HomeScreen() {
     const {getBankDetails}=useBankApi()
 
     const ownerId = 7;
-  const companyId=2;
+  const companyId=3;
   const tradeID=2;
-  const bankID=2;
+  const bankID=3;
 
   const [track, setTrack] = useState<number>(0); 
   const [progress, setProgress] = useState<number>(0); // State for progress

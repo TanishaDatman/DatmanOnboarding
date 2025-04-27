@@ -65,7 +65,7 @@
 
 
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -94,9 +94,14 @@ import ReviewBusiness from './screens/ReviewBusiness';
 import DocumentsBank from './screens/DocumentsBank';
 import CongoScreen from './screens/CongoScreen';
 import { Provider } from 'react-redux';
-import store from "./store/store"
+import store, {persistor} from "./store/store"
 import HomeOnboard from './screens/HomeOnboard';
+import { PersistGate } from 'redux-persist/integration/react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useStyled } from '@gluestack-ui/nativewind-utils'; 
+
+const PERSISTENCE_KEY = 'NAVIGATION_STATE_V1';
+
 
 
 const Tab = createBottomTabNavigator();
@@ -133,12 +138,44 @@ function HomeStack() {
 
 export default function App() {
 
+  const [isReady, setIsReady] = useState(false);
+  const [navigationState, setNavigationState] = useState<any>(undefined); // Set state to undefined initially
+
+  useEffect(() => {
+    // Load the saved navigation state from AsyncStorage when the app starts
+    const loadNavigationState = async () => {
+      try {
+        const savedState = await AsyncStorage.getItem(PERSISTENCE_KEY);
+        if (savedState) {
+          setNavigationState(JSON.parse(savedState));
+        }
+      } catch (error) {
+        console.error('Failed to load navigation state:', error);
+      } finally {
+        setIsReady(true);
+      }
+    };
+
+    loadNavigationState();
+  }, []);
+
+  if (!isReady) {
+    return null; // Show loading spinner or screen while navigation state is being loaded
+  }
+
   // useStyled();
 
   return (
     <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
     <GluestackUIProvider config={customConfig}>
-      <NavigationContainer>
+      <NavigationContainer
+ initialState={navigationState}     
+  onStateChange={(state) => {
+        console.log("Saving Navigation State:", state);
+        AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
+      }}
+      >
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: ({ color, focused }) => {
@@ -180,6 +217,8 @@ export default function App() {
         </Tab.Navigator>
       </NavigationContainer>
     </GluestackUIProvider>
+    </PersistGate>
+
     </Provider>
   );
 }

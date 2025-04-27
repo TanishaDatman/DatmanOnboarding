@@ -53,9 +53,9 @@ export default function DetailsScreen() {
 
 
   const ownerId = 7;
-  const companyId=2;
+  const companyId=6;
   const tradeID=2;
-  const bankID=2;
+  const bankID=3;
 
 
 
