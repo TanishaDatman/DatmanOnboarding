@@ -13,6 +13,8 @@ import {
   SelectIcon,
   ChevronDownIcon,
   Image,
+  Input,
+  InputField,
 } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { SelectTrigger } from '@gluestack-ui/themed';
@@ -111,19 +113,34 @@ const dispatch=useDispatch()
         {/* Input Fields */}
         <VStack space="md" mb="$6">
           {fields.map((field, index) => (
+            // <Box key={index} borderColor="$borderLight300" pb="$2">
+            //   <TextInput
+            //     placeholder={field.label}
+            //     value={field.value}
+            //     onChangeText={field.onChange}
+            //     style={{
+            //       fontSize: 16,
+            //       paddingVertical: 8,
+            //       color: '#000',
+            //     }}
+            //     placeholderTextColor="#888"
+            //   />
+            // </Box>
             <Box key={index} borderColor="$borderLight300" pb="$2">
-              <TextInput
+            <Input
+            variant='underlined'
+            >
+              <InputField
                 placeholder={field.label}
                 value={field.value}
                 onChangeText={field.onChange}
-                style={{
-                  fontSize: 16,
-                  paddingVertical: 8,
-                  color: '#000',
-                }}
-                placeholderTextColor="#888"
+                fontSize="$sm"
+                py="$2"
+                color="$black"
+                placeholderTextColor="$coolGray500"
               />
-            </Box>
+            </Input>
+          </Box>
           ))}
           <Box pb="$2">
             <Select
