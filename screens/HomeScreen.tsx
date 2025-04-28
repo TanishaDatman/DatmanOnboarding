@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import LottieView from 'lottie-react-native';
 
 import {
@@ -16,7 +16,7 @@ import {
   ImageBackground,
 } from '@gluestack-ui/themed';
 import { Pressable, useWindowDimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { AlertCircle } from 'lucide-react-native';
 import { useOwnerApi } from '../hooks/useOwnerApi';
 import { useCompanyApi } from '../hooks/useCompanyApi';
@@ -69,61 +69,121 @@ export default function HomeScreen() {
 
 
    
-  useEffect(() => {
-    const fetchDetails = async () => {
-      try {
-        const ownerData = await getOwnerDetails(ownerId);
-        console.log('Owner data:', ownerData);
-        if (ownerData?.data?.flag === 1) {
-          setTrack(1); // Use setTrack to update the state
+  // useEffect(() => {
+  //   const fetchDetails = async () => {
+  //     try {
+  //       const ownerData = await getOwnerDetails(ownerId);
+  //       console.log('Owner data:', ownerData);
+  //       if (ownerData?.data?.flag === 1) {
+  //         setTrack(1); // Use setTrack to update the state
+  //       }
+
+  //       const companyData = await getCompanyDetails(companyId);
+  //       console.log('Company data:', companyData);
+  //       if (companyData?.data?.flag === 1) {
+  //         setTrack(2);
+  //       }
+
+  //       const tradingData = await getTradingDetails(tradeID);
+  //       console.log('Trading data:', tradingData);
+
+  //       if (tradingData?.data?.flag === 1) {
+  //         setTrack(3);
+  //       }
+
+  //       const bankData = await getBankDetails(bankID);
+  //       console.log('Banking data:', bankData);
+  //       if (bankData?.data?.flag === 1) {
+  //         setTrack(4);
+  //       }
+
+  //     } catch (error) {
+  //       console.error('Error fetching details:', error);
+  //     }
+  //   };
+
+  //   fetchDetails();
+  // }, []); 
+
+
+
+  // useEffect(() => {
+  //   switch (track) {
+  //     case 1:
+  //       setProgress(25);
+  //       break;
+  //     case 2:
+  //       setProgress(50);
+  //       break;
+  //     case 3:
+  //       setProgress(75);
+  //       break;
+  //     case 4:
+  //       setProgress(100);
+  //       break;
+  //     default:
+  //       setProgress(0); 
+
+  //   }
+  // }, [track]); 
+
+  useFocusEffect(
+    useCallback(() => {
+      const fetchDetails = async () => {
+        try {
+          const ownerData = await getOwnerDetails(ownerId);
+          console.log('Owner data:', ownerData);
+          if (ownerData?.data?.flag === 1) {
+            setTrack(1);
+          }
+  
+          const companyData = await getCompanyDetails(companyId);
+          console.log('Company data:', companyData);
+          if (companyData?.data?.flag === 1) {
+            setTrack(2);
+          }
+  
+          const tradingData = await getTradingDetails(tradeID);
+          console.log('Trading data:', tradingData);
+          if (tradingData?.data?.flag === 1) {
+            setTrack(3);
+          }
+  
+          const bankData = await getBankDetails(bankID);
+          console.log('Banking data:', bankData);
+          if (bankData?.data?.flag === 1) {
+            setTrack(4);
+          }
+        } catch (error) {
+          console.error('Error fetching details:', error);
         }
+      };
+  
+      fetchDetails();
+    }, [ownerId, companyId, tradeID, bankID])
+  );
 
-        const companyData = await getCompanyDetails(companyId);
-        console.log('Company data:', companyData);
-        if (companyData?.data?.flag === 1) {
-          setTrack(2);
-        }
-
-        const tradingData = await getTradingDetails(tradeID);
-        console.log('Trading data:', tradingData);
-
-        if (tradingData?.data?.flag === 1) {
-          setTrack(3);
-        }
-
-        const bankData = await getBankDetails(bankID);
-        console.log('Banking data:', bankData);
-        if (bankData?.data?.flag === 1) {
-          setTrack(4);
-        }
-
-      } catch (error) {
-        console.error('Error fetching details:', error);
+  useFocusEffect(
+    useCallback(() => {
+      switch (track) {
+        case 1:
+          setProgress(25);
+          break;
+        case 2:
+          setProgress(50);
+          break;
+        case 3:
+          setProgress(75);
+          break;
+        case 4:
+          setProgress(100);
+          break;
+        default:
+          setProgress(0);
       }
-    };
-
-    fetchDetails();
-  }, []); 
-
-  useEffect(() => {
-    switch (track) {
-      case 1:
-        setProgress(25);
-        break;
-      case 2:
-        setProgress(50);
-        break;
-      case 3:
-        setProgress(75);
-        break;
-      case 4:
-        setProgress(100);
-        break;
-      default:
-        setProgress(0); 
-
-    }
-  }, [track]); 
+    }, [track])
+  );
+  
 
   const getItemsPerRow = () => {
     if (width < 768) return 2;

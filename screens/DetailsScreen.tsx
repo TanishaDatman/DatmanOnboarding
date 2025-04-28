@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Image } from 'react-native';
-import { Box, Text, VStack, HStack, Pressable, Button, ScrollView } from '@gluestack-ui/themed';
-import { useNavigation } from '@react-navigation/native';
+import { Box, Text, VStack, HStack, Pressable, Button, ScrollView, Progress, ProgressFilledTrack } from '@gluestack-ui/themed';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useOwnerApi } from '../hooks/useOwnerApi';
 import { useCompanyApi } from '../hooks/useCompanyApi';
 import { useTradingApi } from '../hooks/useTradingApi';
@@ -52,6 +52,8 @@ export default function DetailsScreen() {
   const [tradingStatus, setTradingtatus] = useState<'pending' | 'inProgress'>('pending');
   const [bankingStatus, setBankingtatus] = useState<'pending' | 'inProgress'>('pending');
 
+  const [track, setTrack] = useState<number>(0); 
+  const [progress, setProgress] = useState<number>(0);
 
   // const ownerId = 7;
   // const companyId=6;
@@ -86,6 +88,7 @@ export default function DetailsScreen() {
   
         if (ownerData?.data?.flag == 1) {
           setOwnerStatus('inProgress');
+          setTrack(1);
         }
   
         const companyData = await getCompanyDetails(companyId);
@@ -93,6 +96,7 @@ export default function DetailsScreen() {
   
         if (companyData?.data?.flag == 1) {
           setCompanyStatus('inProgress');
+          setTrack(2);
         }
 
         const traddingData = await getTradingDetails(tradeID);
@@ -100,6 +104,7 @@ export default function DetailsScreen() {
   
         if (traddingData?.data?.flag == 1) {
           setTradingtatus('inProgress');
+          setTrack(3);
         }
 
         const bankData=await getBankDetails(bankID);
@@ -108,6 +113,7 @@ export default function DetailsScreen() {
 
         if (bankData.data?.flag == 1) {
           setBankingtatus('inProgress');
+          setTrack(4);
         }
 
       } catch (error) {
@@ -117,6 +123,27 @@ export default function DetailsScreen() {
   
     fetchDetails();
   }, []);
+
+  useFocusEffect(
+      useCallback(() => {
+        switch (track) {
+          case 1:
+            setProgress(25);
+            break;
+          case 2:
+            setProgress(50);
+            break;
+          case 3:
+            setProgress(75);
+            break;
+          case 4:
+            setProgress(100);
+            break;
+          default:
+            setProgress(0);
+        }
+      }, [track])
+    );
   
   const getStatusLabel = (stepKey: string) => {
     if (stepKey === 'owner') {
@@ -145,6 +172,7 @@ export default function DetailsScreen() {
     }
     return '$amber600';
   };
+
 
   const getStatusBg = (stepKey: string) => {
     if ((stepKey === 'owner' && ownerStatus === 'inProgress') ||
@@ -179,6 +207,21 @@ export default function DetailsScreen() {
         <Text fontSize="$sm" color="$textLight500" mb="$6">
           Onboarding is an essential step to activate my Datman account for accepting payments and receiving payouts.
         </Text>
+        {
+          progress==0 ? "":
+          <VStack marginBottom="$3">
+          <HStack alignItems="center" w="100%">
+            <Progress value={progress} flex={1} h="$1" bgColor="$coolGray300" rounded="$full">
+              <ProgressFilledTrack h="$1.5" bgColor="$black" />
+            </Progress>
+            <Text fontSize="$sm" fontWeight="$bold" color="$black" marginLeft="$2">
+              {progress}%
+            </Text>
+          </HStack>
+        </VStack>
+        }
+       
+
 
         {/* Card List */}
         <VStack space="md">
