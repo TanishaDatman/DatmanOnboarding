@@ -189,6 +189,8 @@ export default function App() {
                 iconSource = require('./assets/images/settings.png');
               }
 
+
+              
               return (
                 <Image
                   source={iconSource}
