@@ -6,6 +6,7 @@ import { useOwnerApi } from '../hooks/useOwnerApi';
 import { useCompanyApi } from '../hooks/useCompanyApi';
 import { useTradingApi } from '../hooks/useTradingApi';
 import { useBankApi } from '../hooks/useBankApi';
+import {ownerId,companyId,tradeID,bankID} from '../data'
 
 const onboardingData = [
   {
@@ -52,10 +53,10 @@ export default function DetailsScreen() {
   const [bankingStatus, setBankingtatus] = useState<'pending' | 'inProgress'>('pending');
 
 
-  const ownerId = 7;
-  const companyId=6;
-  const tradeID=2;
-  const bankID=3;
+  // const ownerId = 7;
+  // const companyId=6;
+  // const tradeID=2;
+  // const bankID=3;
 
 
 
@@ -189,15 +190,18 @@ export default function DetailsScreen() {
         const isVerificationInProgressbusiness = getStatusLabel(item.key) === 'Verification in progress';
         const isBusinessStep = item.key === 'business';
         const isDisabledbusiness = isVerificationInProgressbusiness && isBusinessStep;
-        // const isVerificationInProgresstrade = getStatusLabel(item.key) === 'Verification in progress';
-        // const isBusinessStep = item.key === 'business';
-        // const isDisabledbusiness = isVerificationInProgresstrade && isBusinessStep;
+        const isVerificationInProgresstrade = getStatusLabel(item.key) === 'Verification in progress';
+        const isTradeStep = item.key === 'trading';
+        const isDisabledtrading = isVerificationInProgresstrade && isTradeStep;
+        const isVerificationInProgressbank = getStatusLabel(item.key) === 'Verification in progress';
+        const isBankStep = item.key === 'bank';
+        const isDisabledbank = isVerificationInProgressbank && isBankStep;
 
         return (
           <Pressable
             key={idx}
             onPress={() => {
-              if (!isDisabledowner && !isDisabledbusiness) {
+              if (!isDisabledowner && !isDisabledbusiness && !isDisabledtrading && !isDisabledbank) {
                 navigation.navigate(item.route);
               }
             }}

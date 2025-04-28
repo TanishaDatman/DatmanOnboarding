@@ -111,7 +111,7 @@ const dispatch=useDispatch()
         {/* Input Fields */}
         <VStack space="md" mb="$6">
           {fields.map((field, index) => (
-            <Box key={index} borderBottomWidth={1} borderColor="$borderLight300" pb="$2">
+            <Box key={index} borderColor="$borderLight300" pb="$2">
               <TextInput
                 placeholder={field.label}
                 value={field.value}

@@ -22,6 +22,8 @@ import { useOwnerApi } from '../hooks/useOwnerApi';
 import { useCompanyApi } from '../hooks/useCompanyApi';
 import { useTradingApi } from '../hooks/useTradingApi';
 import { useBankApi } from '../hooks/useBankApi';
+import {ownerId,companyId,tradeID,bankID} from '../data'
+
 
 export default function HomeScreen() {
   const [activeItem, setActiveItem] = useState<string | null>(null);
@@ -57,10 +59,10 @@ export default function HomeScreen() {
     const {getTradingDetails}=useTradingApi()
     const {getBankDetails}=useBankApi()
 
-    const ownerId = 7;
-  const companyId=3;
-  const tradeID=2;
-  const bankID=3;
+  // const ownerId = 7;
+  // const companyId=3;
+  // const tradeID=2;
+  // const bankID=3;
 
   const [track, setTrack] = useState<number>(0); 
   const [progress, setProgress] = useState<number>(0); // State for progress
